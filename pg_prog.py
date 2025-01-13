@@ -1,6 +1,7 @@
 import os
 import sys
 import pygame
+from PIL import Image
 
 class Board:
     # создание поля
@@ -37,17 +38,49 @@ class Player(pygame.sprite.Sprite):
         self.down = True
         self.step = 0
         self.rotate = 0
+        self.move = False
+
+        #idle
+        self.idle_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleDown.gif'))
+        self.idle_up = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleUp.gif'))
+        self.idle_right = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleRight.gif'))
+        self.idle_left = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleLeft.gif'))
+        #run
+        self.run_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runDown.gif'))
+        self.run_up = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runUp.gif'))
+        self.run_right = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runRight.gif'))
+        self.run_left = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runLeft.gif'))
+
+
 
     def draw(self):
-        if self.down:
-            imp = self.load_image('Idle', 'idleDown.gif')
-        elif self.right:
-            imp = self.load_image('Idle', 'idleRight.gif')
-        elif self.left:
-            imp = self.load_image('Idle', 'idleLeft.gif')
-        else:
-            imp = self.load_image('Idle', 'idleUp.gif')
-        screen.blit(imp, (self.x, self.y))
+        global last_update, animation_cooldown
+        imp = None
+        cur_time = pygame.time.get_ticks()
+        if self.step >= 3:
+            self.step = 0
+        if cur_time - last_update >= animation_cooldown:
+            self.step += 1
+            last_update = cur_time
+        if self.down and self.move is False:
+            # imp = self.load_image('Idle', 'idleDown.gif')
+            imp = self.idle_down[self.step]
+        elif self.right and self.move is False:
+            imp = self.idle_right[self.step]
+        elif self.left and self.move is False:
+            imp = self.idle_left[self.step]
+        elif self.up and self.move is False:
+            imp = self.idle_up[self.step]
+        elif self.down and self.move:
+            imp = self.run_down[self.step]
+        elif self.right and self.move:
+            imp = self.run_right[self.step]
+        elif self.left and self.move:
+            imp = self.run_left[self.step]
+        elif self.up and self.move:
+            imp = self.run_up[self.step]
+        if imp:
+            screen.blit(imp, (self.x, self.y))
 
 
     def load_image(self, name1, name2, colorkey=None):
@@ -66,6 +99,17 @@ class Player(pygame.sprite.Sprite):
             image = image.convert_alpha()
         return image
 
+def split_animated_gif(gif_file_path):
+    ret = []
+    gif = Image.open(gif_file_path)
+    for frame_index in range(gif.n_frames):
+        gif.seek(frame_index)
+        frame_rgba = gif.convert("RGBA")
+        pygame_image = pygame.image.fromstring(
+            frame_rgba.tobytes(), frame_rgba.size, frame_rgba.mode)
+        ret.append(pygame_image)
+    return ret
+
 
 
 
@@ -81,6 +125,8 @@ if __name__ == '__main__':
 
     player = Player()
     val = 10
+    animation_cooldown = 150
+    last_update = pygame.time.get_ticks()
     running = True
     while running:
         for event in pygame.event.get():
@@ -111,8 +157,12 @@ if __name__ == '__main__':
             player.left = False
             player.up = False
             player.down = True
+        if userInput[pygame.K_UP] or userInput[pygame.K_DOWN] or userInput[pygame.K_RIGHT] or userInput[pygame.K_LEFT]:
+            player.move = True
+        else:
+            player.move = False
         screen.fill((50, 50, 50))
         board.render(screen)
-        pygame.time.delay(30)
+        pygame.time.delay(60)
         player.draw()
         pygame.display.flip()
