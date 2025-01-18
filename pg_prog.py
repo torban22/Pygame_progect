@@ -30,8 +30,8 @@ class Board:
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__(all_sprites)
-        self.x = 400
-        self.y = 400
+        self.x = 375
+        self.y = 375
         self.right = False
         self.left = False
         self.up = False
@@ -39,6 +39,9 @@ class Player(pygame.sprite.Sprite):
         self.step = 0
         self.rotate = 0
         self.move = False
+
+        self.health = 300
+        self.attack = 100
 
         #idle
         self.idle_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleDown.gif'))
@@ -50,7 +53,6 @@ class Player(pygame.sprite.Sprite):
         self.run_up = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runUp.gif'))
         self.run_right = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runRight.gif'))
         self.run_left = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runLeft.gif'))
-
 
 
     def draw(self):
@@ -99,6 +101,12 @@ class Player(pygame.sprite.Sprite):
             image = image.convert_alpha()
         return image
 
+    def get_pos(self):
+        return [self.x, self.y]
+
+    def get_field_pos(self):
+        return [self.x // 60, self.y // 60]
+
 def split_animated_gif(gif_file_path):
     ret = []
     gif = Image.open(gif_file_path)
@@ -109,6 +117,8 @@ def split_animated_gif(gif_file_path):
             frame_rgba.tobytes(), frame_rgba.size, frame_rgba.mode)
         ret.append(pygame_image)
     return ret
+
+
 
 
 
