@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
         self.move = False
 
         self.health = 300
-        self.attack = 100
+        self.attack = False
 
         #idle
         self.idle_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleDown.gif'))
@@ -53,6 +53,11 @@ class Player(pygame.sprite.Sprite):
         self.run_up = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runUp.gif'))
         self.run_right = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runRight.gif'))
         self.run_left = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runLeft.gif'))
+        #attack
+        self.attack_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Down.gif'))
+        self.attack_up= split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Up.gif'))
+        self.attack_right = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Right.gif'))
+        self.attack_left = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Left.gif'))
 
 
     def draw(self):
@@ -64,8 +69,19 @@ class Player(pygame.sprite.Sprite):
         if cur_time - last_update >= animation_cooldown:
             self.step += 1
             last_update = cur_time
-        if self.down and self.move is False:
-            # imp = self.load_image('Idle', 'idleDown.gif')
+        if self.down and self.attack:
+            imp = self.attack_down[self.step]
+            self.attack = False
+        elif self.up and self.attack:
+            imp = self.attack_up[self.step]
+            self.attack = False
+        elif self.right and self.attack:
+            imp = self.attack_right[self.step]
+            self.attack = False
+        elif self.left and self.attack:
+            imp = self.attack_left[self.step]
+            self.attack = False
+        elif self.down and self.move is False:
             imp = self.idle_down[self.step]
         elif self.right and self.move is False:
             imp = self.idle_right[self.step]
@@ -119,10 +135,6 @@ def split_animated_gif(gif_file_path):
     return ret
 
 
-
-
-
-
 if __name__ == '__main__':
     pygame.init()
     all_sprites = pygame.sprite.Group()
@@ -143,6 +155,10 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT:
                 running = False
         userInput = pygame.key.get_pressed()
+        if pygame.MOUSEBUTTONDOWN:
+            player.attack = True
+        else:
+            player.attack = False
         if userInput[pygame.K_UP]:
             player.y -= val
             player.right = False
