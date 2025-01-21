@@ -1,7 +1,136 @@
+import pygame
 import os
 import sys
-import pygame
 from PIL import Image
+from random import randint
+
+
+def load_image(gif_file_path):
+    ret = []
+    gif = Image.open(gif_file_path)
+    for frame_index in range(gif.n_frames):
+        gif.seek(frame_index)
+        frame_rgba = gif.convert("RGBA")
+        pygame_image = pygame.image.fromstring(
+            frame_rgba.tobytes(), frame_rgba.size, frame_rgba.mode)
+        ret.append(pygame_image)
+    return ret
+
+
+'''def load_ime(name, colorkey=None):
+    fullname = os.path.join(name)
+    if not os.path.isfile(fullname):
+        print(f"Файл с изображением '{fullname}' не найден")
+        sys.exit()
+    image = pygame.image.load(fullname)
+    return image'''
+
+
+
+
+class Vrag(pygame.sprite.Sprite):
+    def __init__(self, n):
+        super().__init__(all_sprites)
+        self.koords = []
+        self.step = 1
+        for i in range(n):
+            cor = self.poisk()
+            self.koords.append(cor)
+
+
+
+        # idle
+        self.idle1 = [load_image(os.path.join('images', 'enemy',  'Idle1.png')), load_image(os.path.join('images', 'enemy',  'Idle2.png')),
+                      load_image(os.path.join('images', 'enemy',  'Idle3.png')), load_image(os.path.join('images', 'enemy',  'Idle4.png'))]
+
+        # run
+        self.run1 = [
+                     load_image(os.path.join('images', 'enemy',  'Run4.png')),
+                     load_image(os.path.join('images', 'enemy',  'Run5.png')),
+                     load_image(os.path.join('images', 'enemy',  'Run6.png')), load_image(os.path.join('images', 'enemy',  'Run7.png')),
+                     load_image(os.path.join('images', 'enemy',  'Run8.png')),
+                     load_image(os.path.join('images', 'enemy',  'Run9.png'))]
+        # atack
+        self.atack = [load_image(os.path.join('images', 'enemy',  'Attack1.png')), load_image(os.path.join('images', 'enemy',  'Attack2.png')),
+                      load_image(os.path.join('images', 'enemy',  'Attack3.png')), load_image(os.path.join('images', 'enemy',  'Attack4.png')),
+                      load_image(os.path.join('images', 'enemy',  'Attack5.png')), load_image(os.path.join('images', 'enemy',  'Attack6.png'))]
+        #walk
+        self.walk = [load_image(os.path.join('images', 'enemy',  'Walk1.png')), load_image(os.path.join('images', 'enemy',  'Walk2.png')),
+                     load_image(os.path.join('images', 'enemy',  'Walk3.png')), load_image(os.path.join('images', 'enemy',  'Walk4.png')),
+                     load_image(os.path.join('images', 'enemy',  'Walk5.png')), load_image(os.path.join('images', 'enemy',  'Walk6.png'))]
+        #dead
+        self.dead = [load_image(os.path.join('images', 'enemy',  'Dead1.png')), load_image(os.path.join('images', 'enemy',  'Dead2.png')),
+                     load_image(os.path.join('images', 'enemy',  'Dead3.png')), load_image(os.path.join('images', 'enemy',  'Dead4.png')),
+                     load_image(os.path.join('images', 'enemy',  'Dead5.png')), load_image(os.path.join('images', 'enemy',  'Dead6.png')),
+                     load_image(os.path.join('images', 'enemy',  'Dead7.png')), load_image(os.path.join('images', 'enemy',  'Dead8.png'))]
+
+        self.image = self.run1[0]
+        self.move = True
+        self.rect = self.image[0].get_rect()
+        print(self.rect)
+        # self.rect.center = center
+        self.frame = 0  # текущий кадр
+        self.last_update = pygame.time.get_ticks()
+        self.frame_rate = 10  # как быстро кадры меняются
+
+
+
+    def poisk(self):
+        b = (randint(100, 700), randint(50, 100))
+        return b
+
+
+    def draw(self):
+        kord = player.get_pos()
+        now = pygame.time.get_ticks()
+        if self.move:
+            if now - self.last_update > self.frame_rate:
+                self.last_update = now
+                self.frame += 1
+                if self.frame == len(self.run1) - 1:
+                    self.frame = 0
+                self.image = self.run1[self.frame]
+
+        for elem in self.koords:
+            screen.blit(self.image[0], (elem[0], elem[1]))
+            if elem[1] < kord[1]:
+                if elem[0] < kord[0]:
+                    elem1 = (elem[0] + self.step, elem[1] + self.step)
+                    ind1 = self.koords.index(elem)
+                    self.koords.insert(ind1, elem1)
+                    self.koords.remove(elem)
+                else:
+                    elem1 = (elem[0] - self.step, elem[1] + self.step)
+                    ind1 = self.koords.index(elem)
+                    self.koords.insert(ind1, elem1)
+                    self.koords.remove(elem)
+            if elem[1] > kord[1]:
+                if elem[0] < kord[0]:
+                    elem1 = (elem[0] + self.step, elem[1] - self.step)
+                    ind1 = self.koords.index(elem)
+                    self.koords.insert(ind1, elem1)
+                    self.koords.remove(elem)
+                else:
+                    elem1 = (elem[0] - self.step, elem[1] + self.step)
+                    ind1 = self.koords.index(elem)
+                    self.koords.insert(ind1, elem1)
+                    self.koords.remove(elem)
+
+            elif elem[1] == kord[1] and elem[0] == kord[0]:
+                self.move = False
+            elif elem[1] != kord[1] and elem[0] != kord[0]:
+                self.move = True
+        if not self.move:
+            self.image = self.atack[0]
+            if now - self.last_update > self.frame_rate:
+                self.last_update = now
+                self.frame += 1
+                if self.frame == len(self.atack) - 1:
+                    self.frame = 0
+                self.image = self.atack[self.frame]
+
+
+
 
 class Board:
     # создание поля
@@ -20,11 +149,17 @@ class Board:
         self.cell_size = cell_size
 
     def render(self, screen):
+        id = load_image(os.path.join('images', 'enemy',  'grass.png'))
         for y in range(self.height):
             for x in range(self.width):
                 pygame.draw.rect(screen, pygame.Color(255, 255, 255), (
                     x * self.cell_size + self.left, y * self.cell_size + self.top,
                     self.cell_size, self.cell_size), 1)
+                if self.board[x][y] == 0:
+                    screen.blit(id[0], (
+                        x * self.cell_size + self.left, y * self.cell_size + self.top,
+                        self.cell_size, self.cell_size))
+        pygame.draw.rect(screen, pygame.Color(255, 255, 255), (400, 400, 60, 60), 1)
 
 
 class Player(pygame.sprite.Sprite):
@@ -135,12 +270,38 @@ def split_animated_gif(gif_file_path):
     return ret
 
 
+
+if __name__ == '__main__':
+    global size, screen
+    pygame.init()
+    n = 5
+    all_sprites = pygame.sprite.Group()
+    enemies = pygame.sprite.Group()
+    size = 800, 800
+    screen = pygame.display.set_mode(size)
+
+    clock = pygame.time.Clock()
+    vrag = Vrag(n)
+    step = 10
+    # поле 5 на 7
+    board = Board(13, 13)
+    #board.set_view(800, 300, 60)
+    running = True
+
+
+
 if __name__ == '__main__':
     pygame.init()
+    n = 5
     all_sprites = pygame.sprite.Group()
+    enemies = pygame.sprite.Group()
     size = 800, 800
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Игра')
+    clock = pygame.time.Clock()
+    vrag = Vrag(n)
+    step = 10
+
     board = Board(13, 13)
     screen.fill((50, 50, 50))
     board.render(screen)
@@ -155,10 +316,6 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT:
                 running = False
         userInput = pygame.key.get_pressed()
-        if pygame.MOUSEBUTTONDOWN:
-            player.attack = True
-        else:
-            player.attack = False
         if userInput[pygame.K_UP]:
             player.y -= val
             player.right = False
@@ -189,6 +346,8 @@ if __name__ == '__main__':
             player.move = False
         screen.fill((50, 50, 50))
         board.render(screen)
-        pygame.time.delay(60)
         player.draw()
+        vrag.draw()
         pygame.display.flip()
+        clock.tick(10)
+    pygame.quit()
