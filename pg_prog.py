@@ -111,7 +111,7 @@ class Vrag(pygame.sprite.Sprite):
                     self.koords.insert(ind1, elem1)
                     self.koords.remove(elem)
                 else:
-                    elem1 = (elem[0] - self.step, elem[1] + self.step)
+                    elem1 = (elem[0] - self.step, elem[1] - self.step)
                     ind1 = self.koords.index(elem)
                     self.koords.insert(ind1, elem1)
                     self.koords.remove(elem)
@@ -167,6 +167,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__(all_sprites)
         self.x = 375
         self.y = 375
+        self.attack_time = 4
         self.right = False
         self.left = False
         self.up = False
@@ -201,21 +202,21 @@ class Player(pygame.sprite.Sprite):
         cur_time = pygame.time.get_ticks()
         if self.step >= 3:
             self.step = 0
+            if self.attack:
+                self.attack = False
         if cur_time - last_update >= animation_cooldown:
             self.step += 1
             last_update = cur_time
+
         if self.down and self.attack:
             imp = self.attack_down[self.step]
-            self.attack = False
         elif self.up and self.attack:
             imp = self.attack_up[self.step]
-            self.attack = False
         elif self.right and self.attack:
             imp = self.attack_right[self.step]
-            self.attack = False
         elif self.left and self.attack:
             imp = self.attack_left[self.step]
-            self.attack = False
+
         elif self.down and self.move is False:
             imp = self.idle_down[self.step]
         elif self.right and self.move is False:
@@ -224,6 +225,7 @@ class Player(pygame.sprite.Sprite):
             imp = self.idle_left[self.step]
         elif self.up and self.move is False:
             imp = self.idle_up[self.step]
+
         elif self.down and self.move:
             imp = self.run_down[self.step]
         elif self.right and self.move:
@@ -315,6 +317,9 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                player.attack = True
+                player.step = 0
         userInput = pygame.key.get_pressed()
         if userInput[pygame.K_UP]:
             player.y -= val
