@@ -1,8 +1,11 @@
 import pygame
 import os
+import time
 import sys
 from PIL import Image
 from random import randint
+
+from PIL.ImageChops import offset
 
 
 def load_image(gif_file_path):
@@ -16,23 +19,27 @@ def load_image(gif_file_path):
         ret.append(pygame_image)
     return ret
 
-
-'''def load_ime(name, colorkey=None):
-    fullname = os.path.join(name)
+def load_im(name, colorkey=None):
+    fullname = os.path.join('images', name)
     if not os.path.isfile(fullname):
         print(f"Файл с изображением '{fullname}' не найден")
         sys.exit()
     image = pygame.image.load(fullname)
-    return image'''
+    return image
+
+jisn_igr = 300
+jisn_zomb = 100
+running = True
 
 
 
 
 class Vrag(pygame.sprite.Sprite):
-    def __init__(self, n):
+    def __init__(self, n, group):
         super().__init__(all_sprites)
+        global mask_enem
         self.koords = []
-        self.step = 1
+        self.step = 2
         for i in range(n):
             cor = self.poisk()
             self.koords.append(cor)
@@ -61,18 +68,19 @@ class Vrag(pygame.sprite.Sprite):
         #dead
         self.dead = [load_image(os.path.join('images', 'enemy',  'Dead1.png')), load_image(os.path.join('images', 'enemy',  'Dead2.png')),
                      load_image(os.path.join('images', 'enemy',  'Dead3.png')), load_image(os.path.join('images', 'enemy',  'Dead4.png')),
-                     load_image(os.path.join('images', 'enemy',  'Dead5.png')), load_image(os.path.join('images', 'enemy',  'Dead6.png')),
-                     load_image(os.path.join('images', 'enemy',  'Dead7.png')), load_image(os.path.join('images', 'enemy',  'Dead8.png'))]
+                     load_image(os.path.join('images', 'enemy',  'Dead5.png'))]
 
         self.image = self.run1[0]
         self.move = True
+        self.jisn = True
         self.rect = self.image[0].get_rect()
+        self.mask = pygame.mask.from_surface(self.image[0])
+        self.add(group)
+        mask_enem = pygame.mask.from_surface(self.image[0])
 
-        # self.rect.center = center
         self.frame = 0  # текущий кадр
         self.last_update = pygame.time.get_ticks()
         self.frame_rate = 10  # как быстро кадры меняются
-
 
 
     def poisk(self):
@@ -81,9 +89,10 @@ class Vrag(pygame.sprite.Sprite):
 
 
     def draw(self):
+        global ofset, jisn_igr, jisn_zomb, running
         kord = player.get_pos()
         now = pygame.time.get_ticks()
-        if self.move:
+        if self.move and self.jisn:
             if now - self.last_update > self.frame_rate:
                 self.last_update = now
                 self.frame += 1
@@ -93,6 +102,7 @@ class Vrag(pygame.sprite.Sprite):
 
         for elem in self.koords:
             screen.blit(self.image[0], (elem[0], elem[1]))
+            ofset = (elem[0] - kord[0], elem[1] - kord[1])
             if elem[1] < kord[1]:
                 if elem[0] < kord[0]:
                     elem1 = (elem[0] + self.step, elem[1] + self.step)
@@ -127,12 +137,19 @@ class Vrag(pygame.sprite.Sprite):
                     self.koords.insert(ind1, elem1)
                     self.koords.remove(elem)
 
-            if elem[1] == kord[1] and elem[0] == kord[0]:
+            # при столкновении появляется событи USERVENT
+            if mask_play.overlap_area(mask_enem, ofset) > 0:
+                print('KKGJGJGJFJG')
                 self.move = False
-            elif elem[1] != kord[1] and elem[0] != kord[0]:
+                pygame.time.set_timer(pygame.USEREVENT, 100, True)
+                if jisn_zomb <= 0:
+                    self.jisn = False
+                print(jisn_igr)
+
+            elif not mask_play.overlap_area(mask_enem, ofset) > 0:
                 self.move = True
-            print(elem)
-        if not self.move:
+
+        if not self.move and self.jisn:
             self.image = self.atack[0]
             if now - self.last_update > self.frame_rate:
                 self.last_update = now
@@ -140,8 +157,24 @@ class Vrag(pygame.sprite.Sprite):
                 if self.frame == len(self.atack) - 1:
                     self.frame = 0
                 self.image = self.atack[self.frame]
+
+        if not self.jisn:
+            self.image = self.dead[0]
+            if now - self.last_update > self.frame_rate:
+                self.last_update = now
+                self.frame += 1
+                if self.frame == len(self.dead):
+                    self.frame = 0
+                if self.frame > len(self.dead):
+                    self.frame = len(self.dead)
+                self.image = self.dead[self.frame]
+                print(self.frame)
+                if self.frame == 4:
+                    running = False
+                    pygame.time.wait(1000)
         print(self.move)
-        print(kord)
+
+
 
 
 
@@ -179,6 +212,8 @@ class Board:
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__(all_sprites)
+        global mask_play
+
         self.x = 375
         self.y = 375
         self.right = False
@@ -191,6 +226,7 @@ class Player(pygame.sprite.Sprite):
 
         self.health = 300
         self.attack = False
+
 
         #idle
         self.idle_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleDown.gif'))
@@ -207,6 +243,10 @@ class Player(pygame.sprite.Sprite):
         self.attack_up= split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Up.gif'))
         self.attack_right = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Right.gif'))
         self.attack_left = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Left.gif'))
+
+        self.image = self.idle_down[0]
+        self.rect = self.image.get_rect()
+        mask_play = pygame.mask.from_surface(self.image)
 
 
     def draw(self):
@@ -247,6 +287,7 @@ class Player(pygame.sprite.Sprite):
         elif self.up and self.move:
             imp = self.run_up[self.step]
         if imp:
+            self.image = imp
             screen.blit(imp, (self.x, self.y))
 
 
@@ -284,23 +325,41 @@ def split_animated_gif(gif_file_path):
     return ret
 
 
-
-if __name__ == '__main__':
-    global size, screen
-    pygame.init()
-    n = 5
-    all_sprites = pygame.sprite.Group()
-    enemies = pygame.sprite.Group()
-    size = 800, 800
-    screen = pygame.display.set_mode(size)
-
+def terminate():
+    pygame.quit()
+    sys.exit()
+# Заставка
+def start_screen():
+    intro_text = ["ЗАСТАВКА", "",
+                  "Правила игры:",
+                  "Игроку нужно убить зомби"]
+    WIDTH = 800
+    HEIGHT = 800
+    screen = pygame.display.set_mode([800, 800])
+    fon = pygame.transform.scale(load_im('fon.jpg'), (WIDTH, HEIGHT))
+    screen.blit(fon, (0, 0))
+    font = pygame.font.Font(None, 30)
+    text_coord = 50
+    for line in intro_text:
+        string_rendered = font.render(line, 1, pygame.Color('black'))
+        intro_rect = string_rendered.get_rect()
+        text_coord += 10
+        intro_rect.top = text_coord
+        intro_rect.x = 10
+        text_coord += intro_rect.height
+        screen.blit(string_rendered, intro_rect)
     clock = pygame.time.Clock()
-    vrag = Vrag(n)
-    step = 10
-    # поле 5 на 7
-    board = Board(13, 13)
-    #board.set_view(800, 300, 60)
-    running = True
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.KEYDOWN or \
+                    event.type == pygame.MOUSEBUTTONDOWN:
+                return  # начинаем игру
+        pygame.display.flip()
+        clock.tick(50)
+
+
 
 
 
@@ -313,22 +372,41 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Игра')
     clock = pygame.time.Clock()
-    vrag = Vrag(n)
+    vrag = Vrag(n, enemies)
     step = 10
 
     board = Board(13, 13)
     screen.fill((50, 50, 50))
     board.render(screen)
-
+    start_screen()
     player = Player()
     val = 10
     animation_cooldown = 150
+    uron_zomb = 10
+    uron_igr = 50
+
+
     last_update = pygame.time.get_ticks()
-    running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                #running = False
+                terminate()
+            # при вызове события урон получают оба позже изменю
+            elif event.type == pygame.USEREVENT:
+                print('kurva')
+                jisn_igr -= uron_zomb
+                #jisn_zomb -= uron_igr
+                print(jisn_igr)
+
+                if jisn_igr <= 0:
+                    running = False
+                    print('ПОБЕДА ЗОМБИ')
+                if jisn_zomb <= 0:
+                    print('ПОБЕДА ИГРОКА!!!!!!!!!!!!!!!!!')
+
+
+
         userInput = pygame.key.get_pressed()
         if userInput[pygame.K_UP]:
             player.y -= val
@@ -358,7 +436,9 @@ if __name__ == '__main__':
             player.move = True
         else:
             player.move = False
+
         screen.fill((50, 50, 50))
+        #all_sprites.update()
         board.render(screen)
         player.draw()
         vrag.draw()
