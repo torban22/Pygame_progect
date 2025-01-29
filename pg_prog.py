@@ -77,7 +77,7 @@ class Vrag(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image[0])
         self.add(group)
         mask_enem = pygame.mask.from_surface(self.image[0])
-        self.count = 0
+
         self.frame = 0  # текущий кадр
         self.last_update = pygame.time.get_ticks()
         self.frame_rate = 10  # как быстро кадры меняются
@@ -87,17 +87,6 @@ class Vrag(pygame.sprite.Sprite):
         b = (randint(100, 700), randint(50, 100))
         return b
 
-    def atack_zomb(self):
-        global ofset, jisn_igr, jisn_zomb, running
-        now = pygame.time.get_ticks()
-        for i in range(3):
-            self.image = self.atack[0]
-            if now - self.last_update > self.frame_rate:
-                self.last_update = now
-                self.frame += 1
-                if self.frame == len(self.atack) - 1:
-                    self.frame = 0
-                self.image = self.atack[self.frame]
 
     def draw(self):
         global ofset, jisn_igr, jisn_zomb, running
@@ -151,24 +140,16 @@ class Vrag(pygame.sprite.Sprite):
             # при столкновении появляется событи USERVENT
             if mask_play.overlap_area(mask_enem, ofset) > 0:
                 print('KKGJGJGJFJG')
-
-                self.count += 1
-                print(self.count)
                 self.move = False
                 pygame.time.set_timer(pygame.USEREVENT, 100, True)
                 if jisn_zomb <= 0:
                     self.jisn = False
-
+                print(jisn_igr)
 
             elif not mask_play.overlap_area(mask_enem, ofset) > 0:
-                self.count = 0
                 self.move = True
 
-            if self.count >= 3:
-                self.count = 0
-                self.move = True
-
-        if not self.move and self.jisn and self.count < 3:
+        if not self.move and self.jisn:
             self.image = self.atack[0]
             if now - self.last_update > self.frame_rate:
                 self.last_update = now
@@ -397,6 +378,7 @@ if __name__ == '__main__':
     board = Board(13, 13)
     screen.fill((50, 50, 50))
     board.render(screen)
+    start_screen()
     player = Player()
     val = 10
     animation_cooldown = 150
@@ -408,12 +390,14 @@ if __name__ == '__main__':
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                #running = False
+                terminate()
             # при вызове события урон получают оба позже изменю
             elif event.type == pygame.USEREVENT:
                 print('kurva')
-                #jisn_igr -= uron_zomb
+                jisn_igr -= uron_zomb
                 #jisn_zomb -= uron_igr
+                print(jisn_igr)
 
                 if jisn_igr <= 0:
                     running = False
