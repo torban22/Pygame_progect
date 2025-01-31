@@ -14,9 +14,13 @@ class Player(pygame.sprite.Sprite):
         self.step = 0
         self.rotate = 0
         self.move = False
+        self.k = 100
+        self.point_now = 0
 
         self.health = 300
         self.attack = False
+        self.time_start = dt.datetime.now()
+        self.last_time = dt.datetime.now()
 
         #idle
         self.idle_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleDown.gif'))
@@ -51,7 +55,6 @@ class Player(pygame.sprite.Sprite):
         if cur_time - last_update >= animation_cooldown:
             self.step += 1
             last_update = cur_time
-
         if self.down and self.attack:
             self.imp = self.attack_down[self.step]
         elif self.up and self.attack:
@@ -60,7 +63,6 @@ class Player(pygame.sprite.Sprite):
             self.imp = self.attack_right[self.step]
         elif self.left and self.attack:
             self.imp = self.attack_left[self.step]
-
         elif self.down and self.move is False:
             self.imp = self.idle_down[self.step]
         elif self.right and self.move is False:
@@ -113,6 +115,14 @@ class Player(pygame.sprite.Sprite):
     def get_hurt(self):
         if self.health > 0:
             self.health -= uron_zomb
+
+    def points(self):
+        difference = dt.datetime.now() - self.time_start
+        print(difference.seconds)
+        self.k = 100 / difference.seconds
+        self.point_now += self.k
+        self.last_time = dt.datetime.now()
+
 
 
 def split_animated_gif(gif_file_path):

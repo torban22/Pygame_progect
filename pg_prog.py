@@ -7,7 +7,7 @@ from random import randint
 
 from PIL.ImageChops import offset
 from start_screens import *
-from pg_enemy import *
+
 
 def load_image(gif_file_path):
     ret = []
@@ -58,6 +58,7 @@ class Board:
                         self.cell_size, self.cell_size))
 
 
+
 if __name__ == '__main__':
     global size, screen
     pygame.init()
@@ -65,12 +66,13 @@ if __name__ == '__main__':
     start_screen()
     second_screen()
 
+    from pg_enemy import *
+
     vrag = Vrag(n, enemies)
     step = 10
     board = Board(25, 13)
     running = True
     board.render(screen)
-
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -83,15 +85,16 @@ if __name__ == '__main__':
                 player.get_hurt()
 
                 if player.health <= 0:
+                    lose_screen()
+                    see_points()
                     running = False
-                    print('ПОБЕДА ЗОМБИ')
                 if vrag.health <= 0:
+                    win_screen()
+                    see_points()
                     running = False
-                    print('ПОБЕДА ИГРОКА!!!!!!!!!!!!!!!!!')
             if event.type == pygame.MOUSEBUTTONDOWN and player.attack is False:
                 player.attack = True
                 player.step = 0
-
         userInput = pygame.key.get_pressed()
         if userInput[pygame.K_UP]:
             player.y -= val

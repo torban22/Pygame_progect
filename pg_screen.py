@@ -3,6 +3,7 @@ from PIL import Image
 import os
 import sys
 import pygame
+import datetime as dt
 from random import randint
 
 size = 1400, 800
@@ -21,6 +22,7 @@ animation_cooldown = 150
 uron_zomb = 10
 uron_igr = 50
 last_update = pygame.time.get_ticks()
+
 
 jisn_igr = 300
 jisn_zomb = 400

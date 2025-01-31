@@ -147,6 +147,9 @@ class Vrag(pygame.sprite.Sprite):
     def get_hurt(self):
         if self.health > 0:
             self.health -= uron_igr
+        d = dt.datetime.now() - player.last_time
+        if d.seconds > 0:
+            player.points()
 
 def load_image(gif_file_path):
     ret = []

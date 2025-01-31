@@ -1,6 +1,8 @@
 from pg_screen import *
 
 
+LEVEL = 0
+
 def terminate():
     pygame.quit()
     sys.exit()
@@ -68,6 +70,7 @@ def load_image1(name, colorkey=None):
     return image
 
 def second_screen():
+    global LEVEL
     intro_text = ["ВЫБЕРИТЕ УРОВЕНЬ", "",
                   "1-Й УРОВЕНЬ",
                   "",
@@ -78,22 +81,71 @@ def second_screen():
     fon = pygame.transform.scale(load_image1('mountains1.png'), (1400, 800))
     screen.blit(fon, (0, 0))
     font = pygame.font.Font(None, 50)
-    text_coord = 300
-    for line in intro_text:
-        string_rendered = font.render(line, 1, pygame.Color('white'))
+    text_coord = 320
+    for i in range(len(intro_text)):
+        string_rendered = font.render(intro_text[i], 1, pygame.Color('white'))
         intro_rect = string_rendered.get_rect(center=(600 / 2, 800))
         text_coord += 10
         intro_rect.top = text_coord
         text_coord += intro_rect.height
         screen.blit(string_rendered, intro_rect)
-    button_surface = pygame.Surface((200, 100))
-    button_rect = pygame.Rect(600, 500, 200, 100)
+    button_surface1 = pygame.Surface((320, 75))
+    button_rect1 = pygame.Rect(100, 400, 320, 75)
     pygame.display.flip()
-    font = pygame.font.Font(None, 34)
-    string_rendered = font.render('ИГРАТЬ', 1, pygame.Color('white'))
-    intro_rect = string_rendered.get_rect(center=(button_surface.get_width() / 2,
-                                                  button_surface.get_height() / 2))
+    string_rendered1 = font.render('1-Й УРОВЕНЬ', 1, pygame.Color('white'))
+    intro_rect1 = string_rendered1.get_rect(center=(button_surface1.get_width() / 2,
+                                                  button_surface1.get_height() / 2))
+    button_surface2 = pygame.Surface((320, 75))
+    button_rect2 = pygame.Rect(100, 500, 320, 75)
+    pygame.display.flip()
+    font = pygame.font.Font(None, 50)
+    string_rendered2 = font.render('2-Й УРОВЕНЬ', 1, pygame.Color('white'))
+    intro_rect2 = string_rendered2.get_rect(center=(button_surface2.get_width() / 2,
+                                                  button_surface2.get_height() / 2))
+    button_surface3 = pygame.Surface((320, 75))
+    button_rect3 = pygame.Rect(100, 600, 320, 75)
+    pygame.display.flip()
+    font = pygame.font.Font(None, 50)
+    string_rendered3 = font.render('3-Й УРОВЕНЬ', 1, pygame.Color('white'))
+    intro_rect3 = string_rendered3.get_rect(center=(button_surface3.get_width() / 2,
+                                                  button_surface3.get_height() / 2))
 
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if button_rect1.collidepoint(event.pos):
+                    LEVEL = 1
+                    return
+                if button_rect2.collidepoint(event.pos):
+                    LEVEL = 2
+                    return
+                if button_rect3.collidepoint(event.pos):
+                    LEVEL = 3
+                    return
+        pygame.draw.rect(button_surface1, '#315700', (0, 0, 320, 75))
+        pygame.draw.rect(button_surface2, '#315700', (0, 0, 320, 75))
+        pygame.draw.rect(button_surface3, '#315700', (0, 0, 320, 75))
+
+        # Нарисуйте кнопку на экране
+        button_surface1.blit(string_rendered1, intro_rect1)
+        button_surface2.blit(string_rendered2, intro_rect2)
+        button_surface3.blit(string_rendered3, intro_rect3)
+        screen.blit(button_surface1, (button_rect1.x, button_rect1.y))
+        screen.blit(button_surface2, (button_rect2.x, button_rect2.y))
+        screen.blit(button_surface3, (button_rect3.x, button_rect3.y))
+        pygame.display.update()
+        pygame.display.flip()
+        clock.tick(60)
+
+def lose_screen():
+    size = 1400, 800
+    screen = pygame.display.set_mode(size)
+    pygame.display.set_caption('Игра')
+    screen.fill((50, 50, 50))
+    fon = pygame.transform.scale(load_image1('game_over.jpg'), (1400, 800))
+    screen.blit(fon, (0, 0))
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -103,4 +155,59 @@ def second_screen():
         pygame.display.update()
         pygame.display.flip()
         clock.tick(60)
+
+def win_screen():
+    size = 1400, 800
+    screen = pygame.display.set_mode(size)
+    pygame.display.set_caption('Игра')
+    screen.fill((50, 50, 50))
+    fon = pygame.transform.scale(load_image1('win.webp'), (1400, 800))
+    screen.blit(fon, (0, 0))
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                return
+        pygame.display.update()
+        pygame.display.flip()
+        clock.tick(60)
+
+def see_points():
+    global LEVEL
+    from pg_player import player
+    print(player.point_now)
+    size = 1400, 800
+    screen = pygame.display.set_mode(size)
+    pygame.display.set_caption('Игра')
+    screen.fill('black')
+    print(LEVEL)
+    font = pygame.font.Font(None, 50)
+    if LEVEL == 1:
+        with open('level1.txt', 'r') as f:
+            txt = [float(i) for i in f.read().split(';')]
+            print(txt)
+        f.close()
+        if round(player.point_now, 1) > txt[0]:
+            txt[0] = round(player.point_now, 1)
+        with open('level1.txt', 'w') as f:
+            f.write(';'.join(map(str, txt)))
+        f.close()
+    else:
+        txt = [0, 0]
+    string_rendered = font.render(f'Набранные вами очки: {str(round(player.point_now, 1))}', 1, pygame.Color('white'))
+    intro_rect = string_rendered.get_rect(center=(700, 200))
+    screen.blit(string_rendered, intro_rect)
+    string_rendered = font.render(f'Ваш рекорд: {str(txt[0])}', 1, pygame.Color('white'))
+    intro_rect = string_rendered.get_rect(center=(700, 400))
+    screen.blit(string_rendered, intro_rect)
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+        pygame.display.update()
+        pygame.display.flip()
+        clock.tick(60)
+
+
 
