@@ -17,7 +17,7 @@ class Player(pygame.sprite.Sprite):
         self.k = 100
         self.point_now = 0
 
-        self.health = 30000
+        self.health = 1000
         self.attack = False
         self.time_start = dt.datetime.now()
         self.last_time = dt.datetime.now()
