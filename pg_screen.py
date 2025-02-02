@@ -20,7 +20,7 @@ clock = pygame.time.Clock()
 val = 10
 animation_cooldown = 150
 uron_zomb = 10
-uron_igr = 50
+uron_igr = 10
 last_update = pygame.time.get_ticks()
 
 

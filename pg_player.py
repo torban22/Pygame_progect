@@ -17,7 +17,7 @@ class Player(pygame.sprite.Sprite):
         self.k = 100
         self.point_now = 0
 
-        self.health = 300
+        self.health = 30000
         self.attack = False
         self.time_start = dt.datetime.now()
         self.last_time = dt.datetime.now()
@@ -71,7 +71,6 @@ class Player(pygame.sprite.Sprite):
             self.imp = self.idle_left[self.step]
         elif self.up and self.move is False:
             self.imp = self.idle_up[self.step]
-
         elif self.down and self.move:
             self.imp = self.run_down[self.step]
         elif self.right and self.move:
@@ -106,7 +105,7 @@ class Player(pygame.sprite.Sprite):
         return [self.x, self.y]
 
     def get_field_pos(self):
-        return [self.x // 60, self.y // 60]
+        return [(self.x + 25) // 60, (self.y + 25) // 60]
 
     def draw_health(self):
         pygame.draw.rect(screen, 'green', (10, 10, self.health, 30))

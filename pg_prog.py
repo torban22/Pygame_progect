@@ -65,6 +65,7 @@ if __name__ == '__main__':
 
     start_screen()
     second_screen()
+    print(LEVEL)
 
     from pg_enemy import *
 

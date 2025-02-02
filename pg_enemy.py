@@ -1,6 +1,7 @@
-'''from pg_player import player, mask_play
+from pg_player import player, mask_play
 from pg_screen import *
 
+NUM = 0
 
 class Vrag(pygame.sprite.Sprite):
     def __init__(self, n):
@@ -13,6 +14,7 @@ class Vrag(pygame.sprite.Sprite):
         cor = self.poisk()
         self.num = 0
         self.koords = cor
+        self.end = False
 
 
 
@@ -38,7 +40,8 @@ class Vrag(pygame.sprite.Sprite):
         #dead
         self.dead = [load_image(os.path.join('images', 'enemy',  'Dead1.png')), load_image(os.path.join('images', 'enemy',  'Dead2.png')),
                      load_image(os.path.join('images', 'enemy',  'Dead3.png')), load_image(os.path.join('images', 'enemy',  'Dead4.png')),
-                     load_image(os.path.join('images', 'enemy',  'Dead5.png'))]
+                     load_image(os.path.join('images', 'enemy',  'Dead5.png')), load_image(os.path.join('images', 'enemy',  'Dead6.png')),
+                     load_image(os.path.join('images', 'enemy',  'Dead7.png')), load_image(os.path.join('images', 'enemy',  'Dead8.png'))]
 
         self.image = self.run1[0]
         self.move = True
@@ -60,9 +63,27 @@ class Vrag(pygame.sprite.Sprite):
 
     def draw(self, ind):
         global ofset, jisn_igr, jisn_zomb, running, numb
+        if self.end:
+            return
         self.draw_health()
         kord = player.get_pos()
         now = pygame.time.get_ticks()
+        if not self.jisn:
+            self.image = self.dead[0]
+            if now - self.last_update > self.frame_rate:
+                self.last_update = now
+                self.frame += 1
+                if self.frame == len(self.dead):
+                    self.frame = 0
+                if self.frame > len(self.dead):
+                    self.frame = len(self.dead)
+                self.image = self.dead[self.frame]
+                #print(self.frame)
+                if self.frame == 7:
+                    print(0)
+                    running = False
+                    self.end = True
+                    pygame.time.wait(10)
         if self.move and self.jisn:
             if now - self.last_update > self.frame_rate:
                 self.last_update = now
@@ -109,11 +130,11 @@ class Vrag(pygame.sprite.Sprite):
 
             # при столкновении появляется событи USERVENT
         if mask_play.overlap_area(mask_enem, ofset) > 0:
-            print('KKGJGJGJFJG')
             self.move = False
-
-            self.num = self.indik
-            print(f'номер с кем столкнулся {self.num}')
+            NUM = self.indik
+            print(f'номер с кем столкнулся {NUM}')
+            if player.attack and player.health >= 0:
+                self.get_hurt()
             pygame.time.set_timer(pygame.USEREVENT, 100, True)
             if self.health <= 0:
                 self.jisn = False
@@ -130,21 +151,6 @@ class Vrag(pygame.sprite.Sprite):
                 if self.frame == len(self.atack) - 1:
                     self.frame = 0
                 self.image = self.atack[self.frame]
-
-        if not self.jisn:
-            self.image = self.dead[0]
-            if now - self.last_update > self.frame_rate:
-                self.last_update = now
-                self.frame += 1
-                if self.frame == len(self.dead):
-                    self.frame = 0
-                if self.frame > len(self.dead):
-                    self.frame = len(self.dead)
-                self.image = self.dead[self.frame]
-                #print(self.frame)
-                if self.frame == 4:
-                    running = False
-                    pygame.time.wait(10)
         #print(self.move)
 
     def draw_health(self):
@@ -167,8 +173,8 @@ def load_image(gif_file_path):
         pygame_image = pygame.image.fromstring(
             frame_rgba.tobytes(), frame_rgba.size, frame_rgba.mode)
         ret.append(pygame_image)
-    return ret'''
-
+    return ret
+'''
 from pg_player import player, mask_play
 from pg_screen import *
 
@@ -337,4 +343,4 @@ def load_image(gif_file_path):
         pygame_image = pygame.image.fromstring(
             frame_rgba.tobytes(), frame_rgba.size, frame_rgba.mode)
         ret.append(pygame_image)
-    return ret
+    return ret'''
