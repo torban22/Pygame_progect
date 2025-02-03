@@ -1,20 +1,20 @@
 
-# исправил баг с некорректной работой анимации, сделал зомборей независимыми правда умирают они не очень корректно
-# ,бывает бьешь одного а умирает другой
-# также перестали считаться очки незнаю почему
+# Сделал волны в зависимости от уровня если 1 то одна волна если 2 то две волны и тд, волны идут по 5 зомби
+#  Рекорд не выводится на 2 и 3 уровнях
+# класс босса прописал на скорую руку, вроде работае +- (только поправить урон) правда выводится он только в первой волне, при встрече обговорим как игде его выводить
 
 
 
 
 
-'''import pygame
+
+import pygame
 import os
 import time
 import sys
 from PIL import Image
 from random import randint
 
-from PIL.ImageChops import offset
 from start_screens import *
 
 
@@ -56,15 +56,20 @@ class Board:
 
     def render(self, screen):
         id = load_image(os.path.join('images', 'enemy',  'grass.png'))
+        #id1 = load_image(os.path.join('images', 'enemy',  'kaktus.png'))
         for y in range(self.height):
             for x in range(self.width):
                 pygame.draw.rect(screen, pygame.Color(255, 255, 255), (
                     x * self.cell_size + self.left, y * self.cell_size + self.top,
                     self.cell_size, self.cell_size), 1)
-                if self.board[y][x] == 0:
+                if self.board[y][x] == 0 or self.board[y][x] == 1:
                     screen.blit(id[0], (
                         x * self.cell_size + self.left, y * self.cell_size + self.top,
                         self.cell_size, self.cell_size))
+                '''if self.board[y][x] == 1:
+                    screen.blit(id1[0], (
+                        x * self.cell_size + self.left, y * self.cell_size + self.top,
+                        self.cell_size, self.cell_size))'''
 
 
 
@@ -74,22 +79,60 @@ if __name__ == '__main__':
 
     start_screen()
     second_screen()
+    kolvo = 1
 
     from pg_enemy import *
+    from boss import  *
 
-    #vrag = Vrag(n, enemies)
+    boss = Boss()
     n0 = 0
     n1 = 1
     n2 = 2
     n3 = 3
+    n4 = 4
+    n5 = 5
+    n6 = 6
+    n7 = 7
+    n8 =8
+    n9 = 9
+    n11 = 10
+    n12 = 11
+    n13 = 12
+    n14 = 13
+    n15 = 14
     vrag1 = Vrag(n0)
     vrag2 = Vrag(n1)
     vrag3 = Vrag(n2)
     vrag4 = Vrag(n3)
-    #vrag5 = Vrag()
-    spis_zomb = [vrag1, vrag2, vrag3, vrag4]
+    vrag5 = Vrag(n4)
+
+    vrag6 = Vrag(n5)
+    vrag7 = Vrag(n6)
+    vrag8 = Vrag(n7)
+    vrag9 = Vrag(n8)
+    vrag0 = Vrag(n9)
+
+    vrag11 = Vrag(n11)
+    vrag12 = Vrag(n12)
+    vrag13 = Vrag(n13)
+    vrag14 = Vrag(n14)
+    vrag15 = Vrag(n15)
+
+    spis_zomb = [vrag1, vrag2, vrag3, vrag4, vrag5]
+    maso = [[vrag1, vrag2, vrag3, vrag4, vrag5], [vrag6, vrag7, vrag8, vrag9, vrag0], [vrag11, vrag12, vrag13, vrag14, vrag15]]
     step = 10
+
+    volna = 0
+    poln = 0
+
     board = Board(25, 13)
+    from start_screens import LEVEL
+    if LEVEL == 1:
+        board.board[0][2] = 1
+        board.board[2][5] = 1
+        board.board[3][7] = 1
+        board.board[9][1] = 1
+        kolvo = 1
     running = True
     board.render(screen)
     count = 0
@@ -108,35 +151,36 @@ if __name__ == '__main__':
                     print('uservent')
                     if player.attack and jisn_igr >= 0:
 
-                        #elem.get_hurt()
+                        '''#elem.get_hurt()
                         print(elem.indik)
-                        print(spis_zomb)
+                        print(elem.num)
                         #if elem.num >= len(spis_zomb):
                             #elem.num = len(spis_zomb) - 1
                             #print(elem.num)
-                        spis_zomb[elem.num - 1].health -= uron_igr
-                        print(spis_zomb[elem.num - 1].health)
-                        #print(elem.num)
+                        spis_zomb[NUM].health -= uron_igr
+                        print(NUM)
+                        #print(elem.num)'''
 
                     player.get_hurt()
                     if player.health <= 0:
                         lose_screen()
                         see_points()
                         running = False
-                    if spis_zomb[elem.num - 1].health <= 0:
-                        #win_screen()
-                        #see_points()
+                    #a = all([i.health <= 0 for i in spis_zomb])
+                    #if a:
+                     #   win_screen()
+                      #  see_points()
                         #running = False
-                        spis_zomb.remove(spis_zomb[elem.num - 1])
+                        #spis_zomb.remove(spis_zomb[elem.num - 1])
                         #elem.num -= 1
-                        print(elem.num)
+                        #print(elem.num)
                         #elem.jisn = False
                         #count += 1
                     ch += 1
-                if len(spis_zomb) == 0:
+                '''if len(spis_zomb) == 0:
                     win_screen()
                     see_points()
-                    running = False
+                    running = False'''
 
             if event.type == pygame.MOUSEBUTTONDOWN and player.attack is False:
                 player.attack = True
@@ -170,20 +214,67 @@ if __name__ == '__main__':
             player.move = True
         else:
             player.move = False
-
+        if board.board[player.get_field_pos()[1]][player.get_field_pos()[0]] == 1:
+            print('АААА кактус!')
+            player.get_hurt()
         screen.fill((50, 50, 50))
         #all_sprites.update()
         board.render(screen)
         player.draw()
-        for elem in spis_zomb:
-            ind1 = spis_zomb.index(elem)
-            print(f'индекс нарисованного {ind1}')
-            elem.draw(ind1)
         screen.blit(player.imp, (player.x, player.y))
+        '''if LEVEL == 1:
+            for elem in spis_zomb:
+                ind1 = spis_zomb.index(elem)
+                elem.draw(ind1)'''
+        '''for i in range(LEVEL):
+            maso.append(spis_zomb)'''
+
+        if volna == LEVEL:
+            win_screen()
+            see_points()
+        if LEVEL == 3:
+            boss.draw()
+
+
+        kills = 0
+        print(f'килы {kills}')
+        if volna < LEVEL:
+            print(f'волна {volna}')
+            lst = maso[volna]
+            for elem in lst:
+                print(maso[volna])
+                #ind1 = spis_zomb.index(elem)
+                elem.draw()
+                a = all([i.health <= 0 for i in lst])
+                if a:
+                    kills += 1
+                    a = False
+                    if kills == len(spis_zomb):
+                        poln += 1
+                        if poln == 1:
+                            volna = 1
+                        elif poln == 2:
+                            volna = 2
+                        elif poln == 3:
+                            volna = 3
+                        print(kills)
+
+
+
+
+
+
+
+
+
+
+
+
+
         pygame.display.flip()
         clock.tick(10)
-    pygame.quit()'''
-
+    pygame.quit()
+"""
 import pygame
 import os
 import time
@@ -352,4 +443,4 @@ if __name__ == '__main__':
         screen.blit(player.imp, (player.x, player.y))
         pygame.display.flip()
         clock.tick(10)
-    pygame.quit()
+    pygame.quit()"""
