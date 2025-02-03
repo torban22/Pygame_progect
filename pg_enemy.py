@@ -61,7 +61,7 @@ class Vrag(pygame.sprite.Sprite):
         return b
 
 
-    def draw(self, ind):
+    def draw(self):
         global ofset, jisn_igr, jisn_zomb, running, numb
         if self.end:
             return
@@ -142,6 +142,13 @@ class Vrag(pygame.sprite.Sprite):
 
         elif not mask_play.overlap_area(mask_enem, ofset) > 0:
             self.move = True
+
+        if player.sword.mask.overlap_area(mask_enem, ofset) > 0:
+            self.move = False
+            NUM = self.indik
+            print(f'номер с кем столкнулся {NUM}!!!!!!!')
+            if player.attack and player.health >= 0:
+                self.get_hurt()
 
         if not self.move and self.jisn:
             self.image = self.atack[0]

@@ -1,4 +1,10 @@
 from pg_screen import *
+class Sword(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__(all_sprites)
+        self.x = 350
+        self.y = 350
+        self.rect = pygame.Rect(0, 0, 100, 100)
 
 
 class Player(pygame.sprite.Sprite):
@@ -22,6 +28,8 @@ class Player(pygame.sprite.Sprite):
         self.time_start = dt.datetime.now()
         self.last_time = dt.datetime.now()
 
+        self.sword = Sword()
+
         #idle
         self.idle_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleDown.gif'))
         self.idle_up = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleUp.gif'))
@@ -42,6 +50,7 @@ class Player(pygame.sprite.Sprite):
         self.image = self.idle_down[0]
         self.rect = self.image.get_rect()
         self.mask_play = pygame.mask.from_surface(self.image)
+
 
 
     def draw(self):
@@ -83,6 +92,8 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.imp.get_rect()
             self.mask = pygame.mask.from_surface(self.imp)
         self.draw_health()
+        pygame.draw.circle(screen, 'red', (self.x + 25, self.y + 25), 50)
+        self.sword.mask = pygame.mask.from_surface(pygame.Surface((100, 100)))
 
 
     def load_image(self, name1, name2, colorkey=None):
@@ -134,7 +145,6 @@ def split_animated_gif(gif_file_path):
             frame_rgba.tobytes(), frame_rgba.size, frame_rgba.mode)
         ret.append(pygame_image)
     return ret
-
 
 player = Player()
 mask_play = player.mask_play
