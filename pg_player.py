@@ -23,6 +23,9 @@ class Player(pygame.sprite.Sprite):
         self.k = 100
         self.point_now = 0
         self.boss = False
+        self.life = True
+        self.imp = None
+
 
         self.health = 1000
         self.attack = False
@@ -47,6 +50,11 @@ class Player(pygame.sprite.Sprite):
         self.attack_right = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Right.gif'))
         self.attack_left = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Left.gif'))
 
+        self.death = [self.load_image1(os.path.join('death-1.png')),
+                      self.load_image1(os.path.join('death-2.png')),
+                      self.load_image1(os.path.join('death-3.png')),
+                      self.load_image1(os.path.join('death-4.png'))]
+
         self.draw()
         self.image = self.idle_down[0]
         self.rect = self.image.get_rect()
@@ -56,7 +64,6 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self):
         global last_update, animation_cooldown
-        self.imp = None
         cur_time = pygame.time.get_ticks()
         if self.step >= 3:
             self.step = 0
@@ -65,6 +72,13 @@ class Player(pygame.sprite.Sprite):
         if cur_time - last_update >= animation_cooldown:
             self.step += 1
             last_update = cur_time
+        if self.health <= 0:
+            print('!!!!!', self.step)
+            if self.step == 3:
+                self.life = False
+            self.imp = self.death[self.step]
+        if self.life is False:
+            return
         if self.down and self.attack:
             self.imp = self.attack_down[self.step]
         elif self.up and self.attack:
@@ -93,12 +107,31 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.imp.get_rect()
             self.mask = pygame.mask.from_surface(self.imp)
         self.draw_health()
-        pygame.draw.circle(screen, 'red', (self.x + 25, self.y + 25), 50)
+        surface1 = pygame.Surface((100, 100))
+        surface1.set_colorkey((0, 0, 0))
+        surface1.set_alpha(40)
+        pygame.draw.circle(surface1, (1, 1, 1), (50, 50), 50)
+        screen.blit(surface1, (self.x - 25, self.y - 25))
         self.sword.mask = pygame.mask.from_surface(pygame.Surface((100, 100)))
 
 
     def load_image(self, name1, name2, colorkey=None):
         fullname = os.path.join('images', 'player', 'knight', 'GIFs', name1, name2)
+        # если файл не существует, то выходим
+        if not os.path.isfile(fullname):
+            print(f"Файл с изображением '{fullname}' не найден")
+            sys.exit()
+        image = pygame.image.load(fullname)
+        if colorkey is not None:
+            image = image.convert()
+            if colorkey == -1:
+                colorkey = image.get_at((0, 0))
+            image.set_colorkey(colorkey)
+        else:
+            image = image.convert_alpha()
+        return image
+    def load_image1(self, name, colorkey=None):
+        fullname = os.path.join('images', 'player', 'knight', 'separateFrames', 'death',  name)
         # если файл не существует, то выходим
         if not os.path.isfile(fullname):
             print(f"Файл с изображением '{fullname}' не найден")
@@ -121,7 +154,6 @@ class Player(pygame.sprite.Sprite):
 
     def draw_health(self):
         pygame.draw.rect(screen, 'green', (10, 10, self.health, 30))
-        pygame.display.flip()
 
     def get_hurt(self):
         if self.health > 0 and self.boss is False:

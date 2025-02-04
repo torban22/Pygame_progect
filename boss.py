@@ -10,7 +10,7 @@ class Boss(pygame.sprite.Sprite):
         self.koords = []
         #self.indik  = n
         self.step = 2
-        self.health = 600
+        self.health = 100
         cor = self.poisk()
         self.num = 0
         self.koords = cor

@@ -54,50 +54,39 @@ class Board:
 
     def render(self, screen):
         id = load_image(os.path.join('images', 'enemy',  'grass.png'))
-        #id1 = load_image(os.path.join('images', 'enemy',  'ships.png'))
+        id1 = load_image(os.path.join('images', 'enemy',  'ships.png'))
         for y in range(self.height):
             for x in range(self.width):
                 pygame.draw.rect(screen, pygame.Color(255, 255, 255), (
                     x * self.cell_size + self.left, y * self.cell_size + self.top,
                     self.cell_size, self.cell_size), 1)
-                if self.board[y][x] == 0 or self.board[y][x] == 1:
+                if self.board[y][x] == 0:
                     screen.blit(id[0], (
                         x * self.cell_size + self.left, y * self.cell_size + self.top,
                         self.cell_size, self.cell_size))
-                '''if self.board[y][x] == 1:
+                if self.board[y][x] == 1:
                     screen.blit(id1[0], (
                         x * self.cell_size + self.left, y * self.cell_size + self.top,
-                        self.cell_size, self.cell_size))'''
+                        self.cell_size, self.cell_size))
 
 
 
 if __name__ == '__main__':
     global size, screen
     pygame.init()
+    sound1 = pygame.mixer.Sound(os.path.join('sounds', 'Magical Forest.wav'))
+    sound1.play()
 
     start_screen()
     second_screen()
+    sound1.stop()
+    sound2 = pygame.mixer.Sound(os.path.join('sounds', 'battle.mp3'))
+    sound2.play()
     kolvo = 1
 
     from pg_enemy import *
     from boss import *
 
-    boss = Boss()
-    n0 = 0
-    n1 = 1
-    n2 = 2
-    n3 = 3
-    n4 = 4
-    n5 = 5
-    n6 = 6
-    n7 = 7
-    n8 = 8
-    n9 = 9
-    n11 = 10
-    n12 = 11
-    n13 = 12
-    n14 = 13
-    n15 = 14
     vrag1 = Vrag(n0)
     vrag2 = Vrag(n1)
     vrag3 = Vrag(n2)
@@ -118,10 +107,6 @@ if __name__ == '__main__':
 
     spis_zomb = [vrag1, vrag2, vrag3, vrag4, vrag5]
     maso = [[vrag1, vrag2, vrag3, vrag4, vrag5], [vrag6, vrag7, vrag8, vrag9, vrag0], [vrag11, vrag12, vrag13, vrag14, vrag15]]
-    step = 10
-
-    volna = 0
-    poln = 0
 
     board = Board(25, 13)
     from start_screens import LEVEL
@@ -130,12 +115,20 @@ if __name__ == '__main__':
         board.board[2][5] = 1
         board.board[3][7] = 1
         board.board[9][1] = 1
+        board.board[9][9] = 1
+        board.board[11][23] = 1
+        board.board[12][8] = 1
+        board.board[10][19] = 1
+        board.board[4][17] = 1
+        board.board[5][19] = 1
+        board.board[2][12] = 1
         kolvo = 1
+    if LEVEL == 3:
+        boss = Boss()
     running = True
     board.render(screen)
     count = 0
     while running:
-
         for event in pygame.event.get():
             ch = 0
             for elem in spis_zomb:
@@ -158,9 +151,8 @@ if __name__ == '__main__':
                         spis_zomb[NUM].health -= uron_igr
                         print(NUM)
                         #print(elem.num)'''
-
                     player.get_hurt()
-                    if player.health <= 0:
+                    if player.life is False:
                         lose_screen()
                         see_points()
                         running = False
@@ -218,8 +210,6 @@ if __name__ == '__main__':
         screen.fill((50, 50, 50))
         #all_sprites.update()
         board.render(screen)
-        player.draw()
-        screen.blit(player.imp, (player.x, player.y))
         '''if LEVEL == 1:
             for elem in spis_zomb:
                 ind1 = spis_zomb.index(elem)
@@ -234,7 +224,6 @@ if __name__ == '__main__':
             boss.draw()
 
         enem = pygame.sprite.spritecollideany(player.sword, maso[volna])
-        print(enem)
         if enem and player.attack:
             print(111111111)
             enem.get_hurt()
@@ -258,7 +247,8 @@ if __name__ == '__main__':
                             volna = 2
                         elif poln == 3:
                             volna = 3
-
+        player.draw()
+        screen.blit(player.imp, (player.x, player.y))
         pygame.display.flip()
         clock.tick(10)
     pygame.quit()
