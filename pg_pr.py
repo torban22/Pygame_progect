@@ -1,8 +1,6 @@
-
 # Сделал волны в зависимости от уровня если 1 то одна волна если 2 то две волны и тд, волны идут по 5 зомби
 #  Рекорд не выводится на 2 и 3 уровнях
 # класс босса прописал на скорую руку, вроде работае +- (только поправить урон) правда выводится он только в первой волне, при встрече обговорим как игде его выводить
-
 
 
 
@@ -56,7 +54,6 @@ class Board:
 
     def render(self, screen):
         id = load_image(os.path.join('images', 'enemy',  'grass.png'))
-        #id1 = load_image(os.path.join('images', 'enemy',  'kaktus.png'))
         for y in range(self.height):
             for x in range(self.width):
                 pygame.draw.rect(screen, pygame.Color(255, 255, 255), (
@@ -82,7 +79,7 @@ if __name__ == '__main__':
     kolvo = 1
 
     from pg_enemy import *
-    from boss import  *
+    from boss import *
 
     boss = Boss()
     n0 = 0
@@ -93,7 +90,7 @@ if __name__ == '__main__':
     n5 = 5
     n6 = 6
     n7 = 7
-    n8 =8
+    n8 = 8
     n9 = 9
     n11 = 10
     n12 = 11
@@ -119,7 +116,6 @@ if __name__ == '__main__':
     vrag15 = Vrag(n15)
 
     spis_zomb = [vrag1, vrag2, vrag3, vrag4, vrag5]
-    maso = [[vrag1, vrag2, vrag3, vrag4, vrag5], [vrag6, vrag7, vrag8, vrag9, vrag0], [vrag11, vrag12, vrag13, vrag14, vrag15]]
     step = 10
 
     volna = 0
@@ -232,8 +228,6 @@ if __name__ == '__main__':
         if volna == LEVEL:
             win_screen()
             see_points()
-        if LEVEL == 3:
-            boss.draw()
 
 
         kills = 0
@@ -242,7 +236,6 @@ if __name__ == '__main__':
             print(f'волна {volna}')
             lst = maso[volna]
             for elem in lst:
-                print(maso[volna])
                 #ind1 = spis_zomb.index(elem)
                 elem.draw()
                 a = all([i.health <= 0 for i in lst])
@@ -257,19 +250,6 @@ if __name__ == '__main__':
                             volna = 2
                         elif poln == 3:
                             volna = 3
-                        print(kills)
-
-
-
-
-
-
-
-
-
-
-
-
 
         pygame.display.flip()
         clock.tick(10)

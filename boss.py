@@ -26,23 +26,22 @@ class Boss(pygame.sprite.Sprite):
         self.run1 = [
                      load_image(os.path.join('images', 'boss',  'Run4.png')),
                      load_image(os.path.join('images', 'boss',  'Run5.png')),
-                     load_image(os.path.join('images', 'boss',  'Run6.png')), load_image(os.path.join('images', 'boss',  'Run7.png')),
+                     load_image(os.path.join('images', 'boss',  'Run6.png')), load_image(os.path.join('images', 'boss', 'Run7.png')),
                      load_image(os.path.join('images', 'boss',  'Run8.png')),
                      load_image(os.path.join('images', 'boss',  'Run9.png'))]
         # atack
-        self.atack = [load_image(os.path.join('images', 'boss',  'Attack1.png')), load_image(os.path.join('images', 'boss',  'Attack2.png')),
-                      load_image(os.path.join('images', 'boss',  'Attack3.png')), load_image(os.path.join('images', 'boss',  'Attack4.png')),
-                      load_image(os.path.join('images', 'boss',  'Attack5.png')), load_image(os.path.join('images', 'boss',  'Attack6.png'))]
+        self.atack = [load_image(os.path.join('images', 'boss',  'Attack1.png')), load_image(os.path.join('images', 'boss', 'Attack2.png')),
+                      load_image(os.path.join('images', 'boss',  'Attack3.png')), load_image(os.path.join('images', 'boss', 'Attack4.png')),
+                      load_image(os.path.join('images', 'boss',  'Attack5.png')), load_image(os.path.join('images', 'boss', 'Attack6.png'))]
         #walk
-        self.walk = [load_image(os.path.join('images', 'boss',  'Walk1.png')), load_image(os.path.join('images', 'boss',  'Walk2.png')),
-                     load_image(os.path.join('images', 'boss',  'Walk3.png')), load_image(os.path.join('images', 'boss',  'Walk4.png')),
-                     load_image(os.path.join('images', 'boss',  'Walk5.png')), load_image(os.path.join('images', 'boss',  'Walk6.png'))]
+        self.walk = [load_image(os.path.join('images', 'boss',  'Walk1.png')), load_image(os.path.join('images', 'boss', 'Walk2.png')),
+                     load_image(os.path.join('images', 'boss',  'Walk3.png')), load_image(os.path.join('images', 'boss', 'Walk4.png')),
+                     load_image(os.path.join('images', 'boss',  'Walk5.png')), load_image(os.path.join('images', 'boss', 'Walk6.png'))]
         #dead
-        self.dead = [load_image(os.path.join('images', 'boss',  'Dead1.png')), load_image(os.path.join('images', 'boss',  'Dead2.png')),
-                     load_image(os.path.join('images', 'boss',  'Dead3.png')), load_image(os.path.join('images', 'boss',  'Dead4.png')),
-                     load_image(os.path.join('images', 'boss',  'Dead5.png')), load_image(os.path.join('images', 'boss',  'Dead6.png')),
+        self.dead = [load_image(os.path.join('images', 'boss',  'Dead1.png')), load_image(os.path.join('images', 'boss', 'Dead2.png')),
+                     load_image(os.path.join('images', 'boss',  'Dead3.png')), load_image(os.path.join('images', 'boss', 'Dead4.png')),
+                     load_image(os.path.join('images', 'boss',  'Dead5.png')), load_image(os.path.join('images', 'boss', 'Dead6.png')),
                      load_image(os.path.join('images', 'boss',  'Dead7.png')), load_image(os.path.join('images', 'boss',  'Dead8.png'))]
-
         self.image = self.run1[0]
         self.move = True
         self.jisn = True
