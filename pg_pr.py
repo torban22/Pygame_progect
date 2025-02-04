@@ -1,8 +1,6 @@
-
 # Сделал волны в зависимости от уровня если 1 то одна волна если 2 то две волны и тд, волны идут по 5 зомби
 #  Рекорд не выводится на 2 и 3 уровнях
 # класс босса прописал на скорую руку, вроде работае +- (только поправить урон) правда выводится он только в первой волне, при встрече обговорим как игде его выводить
-
 
 
 
@@ -56,20 +54,20 @@ class Board:
 
     def render(self, screen):
         id = load_image(os.path.join('images', 'enemy',  'grass.png'))
-        id1 = load_image(os.path.join('images', 'enemy',  'ships.png'))
+        #id1 = load_image(os.path.join('images', 'enemy',  'ships.png'))
         for y in range(self.height):
             for x in range(self.width):
                 pygame.draw.rect(screen, pygame.Color(255, 255, 255), (
                     x * self.cell_size + self.left, y * self.cell_size + self.top,
                     self.cell_size, self.cell_size), 1)
-                if self.board[y][x] == 0:
+                if self.board[y][x] == 0 or self.board[y][x] == 1:
                     screen.blit(id[0], (
                         x * self.cell_size + self.left, y * self.cell_size + self.top,
                         self.cell_size, self.cell_size))
-                if self.board[y][x] == 1:
+                '''if self.board[y][x] == 1:
                     screen.blit(id1[0], (
                         x * self.cell_size + self.left, y * self.cell_size + self.top,
-                        self.cell_size, self.cell_size))
+                        self.cell_size, self.cell_size))'''
 
 
 
@@ -264,6 +262,7 @@ if __name__ == '__main__':
         pygame.display.flip()
         clock.tick(10)
     pygame.quit()
+
 """
 import pygame
 import os

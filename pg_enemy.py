@@ -65,7 +65,6 @@ class Vrag(pygame.sprite.Sprite):
         global ofset, jisn_igr, jisn_zomb, running, numb
         if self.end:
             return
-        self.draw_health()
         kord = player.get_pos()
         now = pygame.time.get_ticks()
         if not self.jisn:
@@ -136,6 +135,7 @@ class Vrag(pygame.sprite.Sprite):
             if player.attack and player.health >= 0:
                 self.get_hurt()
             pygame.time.set_timer(pygame.USEREVENT, 100, True)
+            player.boss = False
             if self.health <= 0:
                 self.jisn = False
             #print(jisn_igr)

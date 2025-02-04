@@ -21,6 +21,7 @@ val = 10
 animation_cooldown = 150
 uron_zomb = 10
 uron_igr = 10
+boss_uron = 50
 last_update = pygame.time.get_ticks()
 
 

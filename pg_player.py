@@ -22,6 +22,7 @@ class Player(pygame.sprite.Sprite):
         self.move = False
         self.k = 100
         self.point_now = 0
+        self.boss = False
 
         self.health = 1000
         self.attack = False
@@ -123,8 +124,10 @@ class Player(pygame.sprite.Sprite):
         pygame.display.flip()
 
     def get_hurt(self):
-        if self.health > 0:
+        if self.health > 0 and self.boss is False:
             self.health -= uron_zomb
+        elif self.health > 0 and self.boss:
+            self.health -= boss_uron
 
     def points(self):
         difference = dt.datetime.now() - self.time_start

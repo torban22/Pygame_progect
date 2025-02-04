@@ -130,6 +130,7 @@ class Boss(pygame.sprite.Sprite):
             # при столкновении появляется событи USERVENT
         if mask_play.overlap_area(self.mask_boss, ofset) > 0:
             self.move = False
+            player.boss = True
             #NUM = self.indik
             #print(f'номер с кем столкнулся {NUM}')
             if player.attack and player.health >= 0:
