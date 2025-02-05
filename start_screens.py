@@ -16,6 +16,9 @@ def start_screen():
                   "которое вы имеете. Но вам будут мешать кровожадные зомби,",
                   "которых необходимо уничтожить.",
                   "Чем быстрее вы это сделаете, тем больше очков получите"]
+    pygame.mixer.music.load(os.path.join('sounds', 'Magical Forest.wav'))
+    pygame.mixer.music.play()
+    pygame.mixer.music.set_volume(0.2)
 
     fon = pygame.transform.scale(load_image1('mountains.png'), (1400, 800))
     screen.blit(fon, (0, 0))
@@ -43,6 +46,9 @@ def start_screen():
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             # Вызовите функцию on_mouse_button_down()
                 if button_rect.collidepoint(event.pos):
+                    sound1 = pygame.mixer.Sound(os.path.join('sounds', 'btn.mp3'))
+                    sound1.play()
+                    sound1.set_volume(0.2)
                     return
         pygame.draw.rect(button_surface, '#315700', (0, 0, 200, 100))
 
@@ -116,12 +122,21 @@ def second_screen():
                 terminate()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if button_rect1.collidepoint(event.pos):
+                    sound2 = pygame.mixer.Sound(os.path.join('sounds', 'btn.mp3'))
+                    sound2.play()
+                    sound2.set_volume(0.2)
                     LEVEL = 1
                     return
                 if button_rect2.collidepoint(event.pos):
+                    sound2 = pygame.mixer.Sound(os.path.join('sounds', 'btn.mp3'))
+                    sound2.play()
+                    sound2.set_volume(0.2)
                     LEVEL = 2
                     return
                 if button_rect3.collidepoint(event.pos):
+                    sound2 = pygame.mixer.Sound(os.path.join('sounds', 'btn.mp3'))
+                    sound2.play()
+                    sound2.set_volume(0.2)
                     LEVEL = 3
                     return
         pygame.draw.rect(button_surface1, '#315700', (0, 0, 320, 75))
@@ -140,38 +155,53 @@ def second_screen():
         clock.tick(60)
 
 def lose_screen():
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load(os.path.join('sounds', 'game_over.mp3'))
+    pygame.mixer.music.play()
+    pygame.mixer.music.set_volume(0.2)
     size = 1400, 800
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Игра')
     screen.fill((50, 50, 50))
     fon = pygame.transform.scale(load_image1('game_over.jpg'), (1400, 800))
     screen.blit(fon, (0, 0))
+    cur_time = pygame.time.get_ticks()
+    last = pygame.time.get_ticks()
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN and cur_time - last >= 8000:
                 return
         pygame.display.update()
         pygame.display.flip()
         clock.tick(60)
+        cur_time = pygame.time.get_ticks()
 
 def win_screen():
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load(os.path.join('sounds', 'victory.mp3'))
+    pygame.mixer.music.play()
+    pygame.mixer.music.set_volume(0.2)
     size = 1400, 800
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Игра')
     screen.fill((50, 50, 50))
     fon = pygame.transform.scale(load_image1('win.webp'), (1400, 800))
     screen.blit(fon, (0, 0))
+    cur_time = pygame.time.get_ticks()
+    last = pygame.time.get_ticks()
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN and cur_time - last >= 2000:
+                print(cur_time - last, 'время')
                 return
         pygame.display.update()
         pygame.display.flip()
         clock.tick(60)
+        cur_time = pygame.time.get_ticks()
 
 def see_points():
     global LEVEL
@@ -184,13 +214,33 @@ def see_points():
     print(LEVEL)
     font = pygame.font.Font(None, 50)
     if LEVEL == 1:
-        with open('level1.txt', 'r') as f:
+        with open('levels/level1.txt', 'r') as f:
             txt = [float(i) for i in f.read().split(';')]
             print(txt)
         f.close()
         if round(player.point_now, 1) > txt[0]:
             txt[0] = round(player.point_now, 1)
-        with open('level1.txt', 'w') as f:
+        with open('levels/level1.txt', 'w') as f:
+            f.write(';'.join(map(str, txt)))
+        f.close()
+    elif LEVEL == 2:
+        with open('levels/level2.txt', 'r') as f:
+            txt = [float(i) for i in f.read().split(';')]
+            print(txt)
+        f.close()
+        if round(player.point_now, 1) > txt[0]:
+            txt[0] = round(player.point_now, 1)
+        with open('levels/level2.txt', 'w') as f:
+            f.write(';'.join(map(str, txt)))
+        f.close()
+    elif LEVEL == 3:
+        with open('levels/level3.txt', 'r') as f:
+            txt = [float(i) for i in f.read().split(';')]
+            print(txt)
+        f.close()
+        if round(player.point_now, 1) > txt[0]:
+            txt[0] = round(player.point_now, 1)
+        with open('levels/level3.txt', 'w') as f:
             f.write(';'.join(map(str, txt)))
         f.close()
     else:

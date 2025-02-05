@@ -48,3 +48,6 @@ step = 10
 
 volna = 0
 poln = 0
+
+cur_time = pygame.time.get_ticks()
+last = pygame.time.get_ticks()

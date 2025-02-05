@@ -158,6 +158,9 @@ class Boss(pygame.sprite.Sprite):
         pygame.display.flip()
 
     def get_hurt(self):
+        sound2 = pygame.mixer.Sound(os.path.join('sounds', 'vrag_uron.mp3'))
+        sound2.play()
+        sound2.set_volume(0.2)
         if self.health > 0:
             self.health -= uron_igr
         d = dt.datetime.now() - player.last_time

@@ -57,7 +57,7 @@ class Vrag(pygame.sprite.Sprite):
 
 
     def poisk(self):
-        b = (randint(100, 700), randint(50, 100))
+        b = (randint(250, 950), randint(100, 600))
         return b
 
 
@@ -165,6 +165,9 @@ class Vrag(pygame.sprite.Sprite):
         pygame.display.flip()
 
     def get_hurt(self):
+        sound2 = pygame.mixer.Sound(os.path.join('sounds', 'vrag_uron.mp3'))
+        sound2.play()
+        sound2.set_volume(0.2)
         if self.health > 0:
             self.health -= uron_igr
         d = dt.datetime.now() - player.last_time

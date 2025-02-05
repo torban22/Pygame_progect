@@ -156,6 +156,9 @@ class Player(pygame.sprite.Sprite):
         pygame.draw.rect(screen, 'green', (10, 10, self.health, 30))
 
     def get_hurt(self):
+        sound2 = pygame.mixer.Sound(os.path.join('sounds', 'player_uron.mp3'))
+        sound2.play()
+        sound2.set_volume(0.2)
         if self.health > 0 and self.boss is False:
             self.health -= uron_zomb
         elif self.health > 0 and self.boss:
@@ -167,6 +170,12 @@ class Player(pygame.sprite.Sprite):
         self.k = 100 / difference.seconds
         self.point_now += self.k
         self.last_time = dt.datetime.now()
+
+    def health_up(self):
+        self.health += 100
+        sound4 = pygame.mixer.Sound(os.path.join('sounds', 'health_up.mp3'))
+        sound4.play()
+        sound4.set_volume(0.5)
 
 
 
