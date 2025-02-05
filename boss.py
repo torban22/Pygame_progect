@@ -6,11 +6,12 @@ from pg_screen import *
 class Boss(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__(all_sprites)
-        #global mask_enem
+        global mask_boss
+
         self.koords = []
         #self.indik  = n
         self.step = 2
-        self.health = 100
+        self.health = 600
         cor = self.poisk()
         self.num = 0
         self.koords = cor
@@ -48,7 +49,7 @@ class Boss(pygame.sprite.Sprite):
         self.rect = self.image[0].get_rect()
         self.mask_boss = pygame.mask.from_surface(self.image[0])
         #self.add(group)
-        #mask_enem = pygame.mask.from_surface(self.image[0])
+        mask_boss = pygame.mask.from_surface(self.image[0])
 
         self.frame = 0  # текущий кадр
         self.last_update = pygame.time.get_ticks()
@@ -128,9 +129,8 @@ class Boss(pygame.sprite.Sprite):
                 self.koords = elem1
 
             # при столкновении появляется событи USERVENT
-        if mask_play.overlap_area(self.mask_boss, ofset) > 0:
+        if mask_play.overlap_area(mask_boss, ofset) > 0:
             self.move = False
-            player.boss = True
             #NUM = self.indik
             #print(f'номер с кем столкнулся {NUM}')
             if player.attack and player.health >= 0:
@@ -140,8 +140,9 @@ class Boss(pygame.sprite.Sprite):
                 self.jisn = False
             #print(jisn_igr)
 
-        elif not mask_play.overlap_area(self.mask_boss, ofset) > 0:
+        elif mask_play.overlap_area(mask_boss, ofset) == 0:
             self.move = True
+
 
         if not self.move and self.jisn:
             self.image = self.atack[0]
@@ -154,13 +155,10 @@ class Boss(pygame.sprite.Sprite):
         #print(self.move)
 
     def draw_health(self):
-        pygame.draw.rect(screen, 'red', (1400 - self.health, 10, 1400, 30))
+        pygame.draw.rect(screen, 'red', (self.koords[0], self.koords[1], (self.health - 80) // 6, 5))
         pygame.display.flip()
 
     def get_hurt(self):
-        sound2 = pygame.mixer.Sound(os.path.join('sounds', 'vrag_uron.mp3'))
-        sound2.play()
-        sound2.set_volume(0.2)
         if self.health > 0:
             self.health -= uron_igr
         d = dt.datetime.now() - player.last_time
