@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f323d108-f9c0-45d2-92b1-8e72acbb7117" name="Changes" comment="0" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Enemy" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2sG4ZyBliW7yTwgx4NPX0f7GhjF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.ccc.executor": "Run",
+    "Python.pg_pr.executor": "Run",
+    "Python.pg_prog.executor": "Run",
+    "Python.пп.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/ponki/PycharmProjects/Pygame_progect1"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ponki\PycharmProjects\Pygame_progect1\sounds" />
+      <recent name="C:\Users\ponki\PycharmProjects\Pygame_progect1\images\fons" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ponki\PycharmProjects\Pygame_progect1\levels" />
+      <recent name="C:\Users\ponki\PycharmProjects\Pygame_progect1\images\fons" />
+      <recent name="C:\Users\ponki\PycharmProjects\Pygame_progect1" />
+      <recent name="C:\Users\ponki\PycharmProjects\Pygame_progect1\images" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.pg_pr">
+    <configuration name="пп" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Pygame_progect1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/пп.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pg_pr" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Pygame_progect1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pg_pr.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pg_prog" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Pygame_progect1" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pg_prog.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.пп" />
+        <item itemvalue="Python.pg_prog" />
+        <item itemvalue="Python.pg_pr" />
+        <item itemvalue="Python.pg_pr" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-50da183f06c8-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13135.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f323d108-f9c0-45d2-92b1-8e72acbb7117" name="Changes" comment="" />
+      <created>1738068636611</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1738068636611</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Я разделила в разные файлики, тк программа становится большая и крайне неудобно копировать твой код к себе и все это дело заменять. Добавила атаку игрока и вывод шкалы жизни. Чуть чуть поменяла названия для HP, в классе враг теперь есть self.healf как и в игроке, тк глобальные перемнные между файликами трудно конвертировать. Не знаю, почему первая картинка подтормаживает">
+      <option name="closed" value="true" />
+      <created>1738159589396</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1738159589396</updated>
+    </task>
+    <task id="LOCAL-00002" summary="подсчет очков, экран поражения и выигрыша, кнопки кровней(сильно пока ничего не меняют)">
+      <option name="closed" value="true" />
+      <created>1738349501773</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1738349501773</updated>
+    </task>
+    <task id="LOCAL-00003" summary="0">
+      <option name="closed" value="true" />
+      <created>1738510803622</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1738510803622</updated>
+    </task>
+    <task id="LOCAL-00004" summary="вроде теперь корректно работает +-">
+      <option name="closed" value="true" />
+      <created>1738516559237</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1738516559237</updated>
+    </task>
+    <task id="LOCAL-00005" summary="вроде теперь корректно работает +-">
+      <option name="closed" value="true" />
+      <created>1738539032740</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1738539032740</updated>
+    </task>
+    <task id="LOCAL-00006" summary="игра становится невозможной для прохождения тк зрмби и игрок только одновременно уменьшают себе здоровья, поэтому я попыталась расширить область нанесения урона игрока.">
+      <option name="closed" value="true" />
+      <created>1738601873231</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1738601873231</updated>
+    </task>
+    <task id="LOCAL-00007" summary="игра становится невозможной для прохождения тк зрмби и игрок только одновременно уменьшают себе здоровья, поэтому я попыталась расширить область нанесения урона игрока.">
+      <option name="closed" value="true" />
+      <created>1738684562043</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1738684562043</updated>
+    </task>
+    <task id="LOCAL-00008" summary="все вроде работает, добавила звуки и аптечку, чуть чуть изменила область появления зомби, а то они все время в верхнем левом углу спавнятся">
+      <option name="closed" value="true" />
+      <created>1738758764388</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1738758764389</updated>
+    </task>
+    <task id="LOCAL-00009" summary="все вроде работает, добавила звуки и аптечку, чуть чуть изменила область появления зомби, а то они все время в верхнем левом углу спавнятся">
+      <option name="closed" value="true" />
+      <created>1738766687883</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1738766687883</updated>
+    </task>
+    <task id="LOCAL-00010" summary="0">
+      <option name="closed" value="true" />
+      <created>1738767293015</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1738767293015</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ID_WIDTH">
+                <map>
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="93" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="123" />
+                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="47" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Я разделила в разные файлики, тк программа становится большая и крайне неудобно копировать твой код к себе и все это дело заменять. Добавила атаку игрока и вывод шкалы жизни. Чуть чуть поменяла названия для HP, в классе враг теперь есть self.healf как и в игроке, тк глобальные перемнные между файликами трудно конвертировать. Не знаю, почему первая картинка подтормаживает" />
+    <MESSAGE value="подсчет очков, экран поражения и выигрыша, кнопки кровней(сильно пока ничего не меняют)" />
+    <MESSAGE value="вроде теперь корректно работает +-" />
+    <MESSAGE value="игра становится невозможной для прохождения тк зрмби и игрок только одновременно уменьшают себе здоровья, поэтому я попыталась расширить область нанесения урона игрока." />
+    <MESSAGE value="все вроде работает, добавила звуки и аптечку, чуть чуть изменила область появления зомби, а то они все время в верхнем левом углу спавнятся" />
+    <MESSAGE value="0" />
+    <option name="LAST_COMMIT_MESSAGE" value="0" />
+  </component>
+</project>

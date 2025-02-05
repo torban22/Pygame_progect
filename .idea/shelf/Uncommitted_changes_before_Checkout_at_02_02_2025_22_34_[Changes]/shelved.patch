@@ -1,0 +1,13 @@
+Index: level1.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>45.0;0.0
+===================================================================
+diff --git a/level1.txt b/level1.txt
+--- a/level1.txt	
++++ b/level1.txt	
+@@ -1,1 +1,1 @@
+-45.0;0.0
+\ No newline at end of file
++46.8;0.0
+\ No newline at end of file
