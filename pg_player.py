@@ -1,10 +1,4 @@
 from pg_screen import *
-class Sword(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__(all_sprites)
-        self.x = 350
-        self.y = 350
-        self.rect = pygame.Rect(0, 0, 100, 100)
 
 
 class Player(pygame.sprite.Sprite):
@@ -22,14 +16,11 @@ class Player(pygame.sprite.Sprite):
         self.move = False
         self.k = 100
         self.point_now = 0
-        self.boss = False
 
-        self.health = 1000
+        self.health = 300
         self.attack = False
         self.time_start = dt.datetime.now()
         self.last_time = dt.datetime.now()
-
-        self.sword = Sword()
 
         #idle
         self.idle_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleDown.gif'))
@@ -51,7 +42,6 @@ class Player(pygame.sprite.Sprite):
         self.image = self.idle_down[0]
         self.rect = self.image.get_rect()
         self.mask_play = pygame.mask.from_surface(self.image)
-
 
 
     def draw(self):
@@ -81,6 +71,7 @@ class Player(pygame.sprite.Sprite):
             self.imp = self.idle_left[self.step]
         elif self.up and self.move is False:
             self.imp = self.idle_up[self.step]
+
         elif self.down and self.move:
             self.imp = self.run_down[self.step]
         elif self.right and self.move:
@@ -93,8 +84,6 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.imp.get_rect()
             self.mask = pygame.mask.from_surface(self.imp)
         self.draw_health()
-        pygame.draw.circle(screen, 'red', (self.x + 25, self.y + 25), 50)
-        self.sword.mask = pygame.mask.from_surface(pygame.Surface((100, 100)))
 
 
     def load_image(self, name1, name2, colorkey=None):
@@ -117,21 +106,19 @@ class Player(pygame.sprite.Sprite):
         return [self.x, self.y]
 
     def get_field_pos(self):
-        return [(self.x + 25) // 60, (self.y + 25) // 60]
+        return [self.x // 60, self.y // 60]
 
     def draw_health(self):
         pygame.draw.rect(screen, 'green', (10, 10, self.health, 30))
         pygame.display.flip()
 
     def get_hurt(self):
-        if self.health > 0 and self.boss is False:
+        if self.health > 0:
             self.health -= uron_zomb
-        elif self.health > 0 and self.boss:
-            self.health -= boss_uron
 
     def points(self):
         difference = dt.datetime.now() - self.time_start
-        print(difference.seconds)
+        #print(difference.seconds)
         self.k = 100 / difference.seconds
         self.point_now += self.k
         self.last_time = dt.datetime.now()
@@ -148,6 +135,7 @@ def split_animated_gif(gif_file_path):
             frame_rgba.tobytes(), frame_rgba.size, frame_rgba.mode)
         ret.append(pygame_image)
     return ret
+
 
 player = Player()
 mask_play = player.mask_play

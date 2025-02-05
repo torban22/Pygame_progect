@@ -82,6 +82,7 @@ if __name__ == '__main__':
     from boss import *
 
     boss = Boss()
+
     n0 = 0
     n1 = 1
     n2 = 2

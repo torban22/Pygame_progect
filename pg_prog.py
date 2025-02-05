@@ -1,14 +1,6 @@
-import pygame
-import os
-import time
-import sys
-from PIL import Image
-from random import randint
-
-
 from pg_player import player, mask_play
 from pg_screen import *
-from start_screens import *
+
 NUM = 0
 
 class Vrag(pygame.sprite.Sprite):
@@ -74,6 +66,7 @@ class Vrag(pygame.sprite.Sprite):
         if self.end:
             return
         kord = player.get_pos()
+        self.draw_health()
         now = pygame.time.get_ticks()
         if not self.jisn:
             self.image = self.dead[0]
@@ -151,12 +144,12 @@ class Vrag(pygame.sprite.Sprite):
         elif not mask_play.overlap_area(mask_enem, ofset) > 0:
             self.move = True
 
-        if player.sword.mask.overlap_area(mask_enem, ofset) > 0:
+        '''if player.sword.mask.overlap_area(mask_enem, ofset) > 0:
             self.move = False
             NUM = self.indik
             print(f'номер с кем столкнулся {NUM}!!!!!!!')
             if player.attack and player.health >= 0:
-                self.get_hurt()
+                self.get_hurt()'''
 
         if not self.move and self.jisn:
             self.image = self.atack[0]
@@ -169,7 +162,7 @@ class Vrag(pygame.sprite.Sprite):
         #print(self.move)
 
     def draw_health(self):
-        pygame.draw.rect(screen, 'red', (1400 - self.health, 10, 1400, 30))
+        pygame.draw.rect(screen, 'red', (self.koords[0], self.koords[1], (self.health - 80) // 6, 5))
         pygame.display.flip()
 
     def get_hurt(self):
@@ -180,6 +173,14 @@ class Vrag(pygame.sprite.Sprite):
             player.points()
 
 
+import pygame
+import os
+import time
+import sys
+from PIL import Image
+from random import randint
+
+from start_screens import *
 
 
 def load_image(gif_file_path):
@@ -192,7 +193,6 @@ def load_image(gif_file_path):
             frame_rgba.tobytes(), frame_rgba.size, frame_rgba.mode)
         ret.append(pygame_image)
     return ret
-
 
 def load_im(name, colorkey=None):
     fullname = os.path.join('images', name)
@@ -220,8 +220,8 @@ class Board:
         self.cell_size = cell_size
 
     def render(self, screen):
-        id = load_image(os.path.join('images', 'enemy', 'grass.png'))
-        # id1 = load_image(os.path.join('images', 'enemy',  'ships.png'))
+        id = load_image(os.path.join('images', 'enemy',  'grass.png'))
+        #id1 = load_image(os.path.join('images', 'enemy',  'ships.png'))
         for y in range(self.height):
             for x in range(self.width):
                 pygame.draw.rect(screen, pygame.Color(255, 255, 255), (
@@ -235,6 +235,7 @@ class Board:
                     screen.blit(id1[0], (
                         x * self.cell_size + self.left, y * self.cell_size + self.top,
                         self.cell_size, self.cell_size))'''
+
 
 
 if __name__ == '__main__':
@@ -291,7 +292,6 @@ if __name__ == '__main__':
 
     board = Board(25, 13)
     from start_screens import LEVEL
-
     if LEVEL == 1:
         board.board[0][2] = 1
         board.board[2][5] = 1
@@ -309,12 +309,13 @@ if __name__ == '__main__':
                 if ch >= 1:
                     break
                 if event.type == pygame.QUIT:
-                    # running = False
+                    #running = False
                     terminate()
                 # пи вызове события урон получают оба позже изменю
                 elif event.type == pygame.USEREVENT:
                     print('uservent')
                     if player.attack and jisn_igr >= 0:
+
                         '''#elem.get_hurt()
                         print(elem.indik)
                         print(elem.num)
@@ -330,16 +331,16 @@ if __name__ == '__main__':
                         lose_screen()
                         see_points()
                         running = False
-                    # a = all([i.health <= 0 for i in spis_zomb])
-                    # if a:
-                    #   win_screen()
-                    #  see_points()
-                    # running = False
-                    # spis_zomb.remove(spis_zomb[elem.num - 1])
-                    # elem.num -= 1
-                    # print(elem.num)
-                    # elem.jisn = False
-                    # count += 1
+                    #a = all([i.health <= 0 for i in spis_zomb])
+                    #if a:
+                     #   win_screen()
+                      #  see_points()
+                        #running = False
+                        #spis_zomb.remove(spis_zomb[elem.num - 1])
+                        #elem.num -= 1
+                        #print(elem.num)
+                        #elem.jisn = False
+                        #count += 1
                     ch += 1
                 '''if len(spis_zomb) == 0:
                     win_screen()
@@ -382,7 +383,7 @@ if __name__ == '__main__':
             print('АААА кактус!')
             player.get_hurt()
         screen.fill((50, 50, 50))
-        # all_sprites.update()
+        #all_sprites.update()
         board.render(screen)
         player.draw()
         screen.blit(player.imp, (player.x, player.y))
@@ -397,6 +398,7 @@ if __name__ == '__main__':
             win_screen()
             see_points()
 
+
         enem = pygame.sprite.spritecollideany(player.sword, maso[volna])
         print(enem)
         if enem and player.attack:
@@ -408,7 +410,7 @@ if __name__ == '__main__':
             print(f'волна {volna}')
             lst = maso[volna]
             for elem in lst:
-                # ind1 = spis_zomb.index(elem)
+                #ind1 = spis_zomb.index(elem)
                 elem.draw()
                 a = all([i.health <= 0 for i in lst])
                 if a:
