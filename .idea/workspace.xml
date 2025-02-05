@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f323d108-f9c0-45d2-92b1-8e72acbb7117" name="Changes" comment="0" />
+    <list default="true" id="f323d108-f9c0-45d2-92b1-8e72acbb7117" name="Changes" comment="0">
+      <change beforePath="$PROJECT_DIR$/boss.py" beforeDir="false" afterPath="$PROJECT_DIR$/boss.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/start_screens.py" beforeDir="false" afterPath="$PROJECT_DIR$/start_screens.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,17 +36,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.ccc.executor": "Run",
-    "Python.pg_pr.executor": "Run",
-    "Python.pg_prog.executor": "Run",
-    "Python.пп.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/ponki/PycharmProjects/Pygame_progect1"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.ccc.executor&quot;: &quot;Run&quot;,
+    &quot;Python.pg_pr.executor&quot;: &quot;Run&quot;,
+    &quot;Python.pg_prog.executor&quot;: &quot;Run&quot;,
+    &quot;Python.пп.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;player&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ponki/PycharmProjects/Pygame_progect1&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ponki\PycharmProjects\Pygame_progect1\sounds" />
@@ -125,9 +129,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.pg_pr" />
         <item itemvalue="Python.пп" />
         <item itemvalue="Python.pg_prog" />
-        <item itemvalue="Python.pg_pr" />
         <item itemvalue="Python.pg_pr" />
       </list>
     </recent_temporary>
@@ -228,7 +232,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738767293015</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="0">
+      <option name="closed" value="true" />
+      <created>1738767918448</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1738767918448</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
