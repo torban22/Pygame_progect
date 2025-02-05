@@ -3,6 +3,7 @@ from pg_screen import *
 
 LEVEL = 0
 
+
 def terminate():
     pygame.quit()
     sys.exit()
@@ -20,7 +21,7 @@ def start_screen():
     pygame.mixer.music.play()
     pygame.mixer.music.set_volume(0.2)
 
-    fon = pygame.transform.scale(load_image1('mountains.png'), (1400, 800))
+    fon = pygame.transform.scale(load_image1(os.path.join('fons', 'mountains.png')), (1400, 800))
     screen.blit(fon, (0, 0))
     font = pygame.font.Font(None, 50)
     text_coord = 50
@@ -38,7 +39,6 @@ def start_screen():
     string_rendered = font.render('ИГРАТЬ', 1, pygame.Color('white'))
     intro_rect = string_rendered.get_rect(center=(button_surface.get_width() / 2,
             button_surface.get_height() / 2))
-
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -84,7 +84,7 @@ def second_screen():
                   "",
                   "3-Й УРОВЕНЬ"]
 
-    fon = pygame.transform.scale(load_image1('mountains1.png'), (1400, 800))
+    fon = pygame.transform.scale(load_image1(os.path.join('fons', 'mountains1.png')), (1400, 800))
     screen.blit(fon, (0, 0))
     font = pygame.font.Font(None, 50)
     text_coord = 320
@@ -154,6 +154,7 @@ def second_screen():
         pygame.display.flip()
         clock.tick(60)
 
+
 def lose_screen():
     pygame.mixer.music.stop()
     pygame.mixer.music.load(os.path.join('sounds', 'game_over.mp3'))
@@ -163,7 +164,7 @@ def lose_screen():
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Игра')
     screen.fill((50, 50, 50))
-    fon = pygame.transform.scale(load_image1('game_over.jpg'), (1400, 800))
+    fon = pygame.transform.scale(load_image1(os.path.join('fons', 'game_over.jpg')), (1400, 800))
     screen.blit(fon, (0, 0))
     cur_time = pygame.time.get_ticks()
     last = pygame.time.get_ticks()
@@ -187,7 +188,7 @@ def win_screen():
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Игра')
     screen.fill((50, 50, 50))
-    fon = pygame.transform.scale(load_image1('win.webp'), (1400, 800))
+    fon = pygame.transform.scale(load_image1(os.path.join('fons', 'win.webp')), (1400, 800))
     screen.blit(fon, (0, 0))
     cur_time = pygame.time.get_ticks()
     last = pygame.time.get_ticks()

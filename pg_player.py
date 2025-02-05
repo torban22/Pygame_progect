@@ -1,4 +1,5 @@
 from pg_screen import *
+
 class Sword(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__(all_sprites)
@@ -26,7 +27,6 @@ class Player(pygame.sprite.Sprite):
         self.life = True
         self.imp = None
 
-
         self.health = 1000
         self.attack = False
         self.time_start = dt.datetime.now()
@@ -37,7 +37,8 @@ class Player(pygame.sprite.Sprite):
         #idle
         self.idle_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleDown.gif'))
         self.idle_up = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleUp.gif'))
-        self.idle_right = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleRight.gif'))
+        self.idle_right = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle',
+                                                          'idleRight.gif'))
         self.idle_left = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'Idle', 'idleLeft.gif'))
         #run
         self.run_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runDown.gif'))
@@ -45,10 +46,14 @@ class Player(pygame.sprite.Sprite):
         self.run_right = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runRight.gif'))
         self.run_left = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'run', 'runLeft.gif'))
         #attack
-        self.attack_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Down.gif'))
-        self.attack_up = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Up.gif'))
-        self.attack_right = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Right.gif'))
-        self.attack_left = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1', 'attack1Left.gif'))
+        self.attack_down = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1',
+                                                           'attack1Down.gif'))
+        self.attack_up = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1',
+                                                         'attack1Up.gif'))
+        self.attack_right = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1',
+                                                            'attack1Right.gif'))
+        self.attack_left = split_animated_gif(os.path.join('images', 'player', 'knight', 'GIFs', 'attack1',
+                                                           'attack1Left.gif'))
 
         self.death = [self.load_image1(os.path.join('death-1.png')),
                       self.load_image1(os.path.join('death-2.png')),
@@ -59,8 +64,6 @@ class Player(pygame.sprite.Sprite):
         self.image = self.idle_down[0]
         self.rect = self.image.get_rect()
         self.mask_play = pygame.mask.from_surface(self.image)
-
-
 
     def draw(self):
         global last_update, animation_cooldown
@@ -130,6 +133,7 @@ class Player(pygame.sprite.Sprite):
         else:
             image = image.convert_alpha()
         return image
+
     def load_image1(self, name, colorkey=None):
         fullname = os.path.join('images', 'player', 'knight', 'separateFrames', 'death',  name)
         # если файл не существует, то выходим
@@ -176,7 +180,6 @@ class Player(pygame.sprite.Sprite):
         sound4 = pygame.mixer.Sound(os.path.join('sounds', 'health_up.mp3'))
         sound4.play()
         sound4.set_volume(0.5)
-
 
 
 def split_animated_gif(gif_file_path):

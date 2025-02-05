@@ -178,34 +178,9 @@ if __name__ == '__main__':
                     terminate()
                 # пи вызове события урон получают оба позже изменю
                 elif event.type == pygame.USEREVENT:
-                    print('uservent')
-                    if player.attack and jisn_igr >= 0:
-
-                        '''#elem.get_hurt()
-                        print(elem.indik)
-                        print(elem.num)
-                        #if elem.num >= len(spis_zomb):
-                            #elem.num = len(spis_zomb) - 1
-                            #print(elem.num)
-                        spis_zomb[NUM].health -= uron_igr
-                        print(NUM)
-                        #print(elem.num)'''
-                    player.get_hurt()
-                    #a = all([i.health <= 0 for i in spis_zomb])
-                    #if a:
-                     #   win_screen()
-                      #  see_points()
-                        #running = False
-                        #spis_zomb.remove(spis_zomb[elem.num - 1])
-                        #elem.num -= 1
-                        #print(elem.num)
-                        #elem.jisn = False
-                        #count += 1
+                    if jisn_igr >= 0:
+                        player.get_hurt()
                     ch += 1
-                '''if len(spis_zomb) == 0:
-                    win_screen()
-                    see_points()
-                    running = False'''
             if volna <= 2:
                 enem = pygame.sprite.spritecollideany(player.sword, maso[volna])
             if event.type == pygame.MOUSEBUTTONDOWN and volna <= 2 and enem and player.attack:
@@ -262,9 +237,7 @@ if __name__ == '__main__':
         if volna == 2:
             boss.draw()
         kills = 0
-        print(f'килы {kills}')
         if volna < LEVEL:
-            print(f'волна {volna}')
             lst = maso[volna]
             for elem in lst:
                 elem.draw()
