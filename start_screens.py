@@ -258,6 +258,3 @@ def see_points():
         pygame.display.update()
         pygame.display.flip()
         clock.tick(60)
-
-
-
